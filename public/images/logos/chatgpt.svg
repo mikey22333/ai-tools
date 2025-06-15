@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="60" cy="60" r="60" fill="#10A37F"/>
-  <path d="M60 20C71.04 20 80 28.96 80 40C80 51.04 71.04 60 60 60C48.96 60 40 51.04 40 40C40 28.96 48.96 20 60 20Z" fill="white"/>
-  <path d="M60 60C71.04 60 80 68.96 80 80C80 91.04 71.04 100 60 100C48.96 100 40 91.04 40 80C40 68.96 48.96 60 60 60Z" fill="white"/>
-  <rect x="45" y="45" width="30" height="30" rx="5" fill="#10A37F"/>
-  <text x="60" y="65" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">GPT</text>
-</svg>

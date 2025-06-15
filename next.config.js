@@ -1,52 +1,85 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Production optimizations
+  output: 'standalone',
+  poweredByHeader: false,
+  compress: true,
+  
+  // Image optimization
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'via.placeholder.com',
+        hostname: '**',
       },
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
-      },
-      {
-        protocol: 'https',
-        hostname: 'yt3.googleusercontent.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'github.githubassets.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.jasper.ai',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.worldvectorlogo.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'static.grammarly.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.openai.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'img.icons8.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.jsdelivr.net',
+        protocol: 'http',
+        hostname: '**',
       },
     ],
+    unoptimized: false,
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
+  
+  // Performance optimizations
+  swcMinify: true,
+  
+  // Webpack configuration
+  webpack: (config, { isServer }) => {
+    // Fix for Supabase realtime-js module issues
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+      };
+    }
+    
+    // Production optimizations
+    if (config.mode === 'production') {
+      config.optimization.splitChunks.cacheGroups = {
+        ...config.optimization.splitChunks.cacheGroups,
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          priority: 10,
+          chunks: 'all',
+        },
+      };
+    }
+    
+    return config;
+  },
+  
+  experimental: {
+    esmExternals: 'loose',
+  },
+  
+  // Security headers
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
+      },
+    ];
   },
 }
 

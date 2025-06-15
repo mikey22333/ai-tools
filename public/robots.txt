@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://allaitools.com/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Disallow internal API endpoints
+Disallow: /api/webhooks/
