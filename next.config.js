@@ -25,8 +25,7 @@ const nextConfig = {
   
   // Performance optimizations
   swcMinify: true,
-  
-  // Webpack configuration
+    // Webpack configuration
   webpack: (config, { isServer }) => {
     // Fix for Supabase realtime-js module issues
     if (!isServer) {
@@ -38,6 +37,12 @@ const nextConfig = {
         crypto: false,
       };
     }
+    
+    // Add path aliases
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname),
+    };
     
     // Production optimizations
     if (config.mode === 'production') {
