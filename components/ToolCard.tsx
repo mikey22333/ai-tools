@@ -23,7 +23,7 @@ export default function ToolCard({ tool, showTrendingBadge = false }: ToolCardPr
         `https://${domain}/favicon.ico`,
         `https://${domain}/favicon.png`,
         `https://www.google.com/s2/favicons?domain=${domain}`,
-        '/images/default-tool-logo.png' // Local fallback
+        '/images/default-tool-logo.svg' // Local fallback
       ]
       
       // Try the next fallback URL
