@@ -70,8 +70,6 @@ export default function ToolsDirectory() {
     if (!searchQuery || searchQuery.trim() === '') {
       return matchesCategory
     }
-      return matchesCategory
-    }
     
     const query = searchQuery.toLowerCase().trim()
     
