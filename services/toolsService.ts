@@ -50,16 +50,31 @@ export const toolsService = {
     }))
   },  // Get all tools
   async getTools(): Promise<AITool[]> {
-    const { data, error } = await supabase
-      .from('tools')
-      .select('*')
-      .order('rating', { ascending: false })
-      .limit(5000) // Increase limit to handle all tools
+    // Fetch all tools using pagination to bypass the 1000 row limit
+    const allTools: any[] = []
+    const batchSize = 1000
+    let from = 0
+    let hasMore = true
     
-    if (error) throw error
-    
+    while (hasMore) {
+      const { data, error } = await supabase
+        .from('tools')
+        .select('*')
+        .order('rating', { ascending: false })
+        .range(from, from + batchSize - 1)
+      
+      if (error) throw error
+        if (data && data.length > 0) {
+        allTools.push(...data)
+        from += batchSize
+        hasMore = data.length === batchSize
+      } else {
+        hasMore = false
+      }
+    }
+
     // Transform database format to frontend format
-    return (data || []).map(tool => ({
+    return allTools.map(tool => ({
       id: tool.id,
       name: tool.name,
       description: tool.description,
