@@ -40,8 +40,86 @@
     .btn-secondary {
     @apply border border-primary-400/50 text-gray-700 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-primary-400/10 hover:border-primary-400;
   }
-    .tool-card {
+  .tool-card {
     @apply bg-white border border-gray-200 rounded-xl p-6 transition-all duration-300 hover:border-primary-400/50 hover:bg-gray-50 hover:scale-105 hover:shadow-xl hover:shadow-primary-500/10;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0.75rem;
+    padding: 2px;
+    background: linear-gradient(45deg, 
+      transparent, 
+      rgba(59, 130, 246, 0.3), 
+      rgba(147, 51, 234, 0.3), 
+      rgba(236, 72, 153, 0.3),
+      rgba(59, 130, 246, 0.3),
+      transparent
+    );
+    background-size: 300% 300%;
+    animation: glowing-border 3s ease-in-out infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .tool-card:hover::before {
+    opacity: 1;
+  }
+    @keyframes glowing-border {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  /* Featured Tool Cards with Glowing Effect */
+  .featured-tool-card {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .featured-tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0.75rem;
+    padding: 2px;
+    background: linear-gradient(45deg, 
+      rgba(59, 130, 246, 0.6), 
+      rgba(147, 51, 234, 0.6), 
+      rgba(236, 72, 153, 0.6),
+      rgba(59, 130, 246, 0.6)
+    );
+    background-size: 400% 400%;
+    animation: glowing-border 3s ease-in-out infinite;
+    opacity: 0.7;
+    z-index: -1;
+  }
+  
+  .featured-tool-card:hover::before {
+    opacity: 1;
+    animation-duration: 2s;
+  }
+  
+  .featured-tool-inner {
+    position: relative;
+    z-index: 1;
   }
   
   /* Animated Background Blob Effects */
@@ -124,11 +202,85 @@
       0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
-  
-  .category-card:hover {
+    .category-card:hover {
     box-shadow: 
       0 20px 25px -5px rgba(0, 0, 0, 0.1),
       0 10px 10px -5px rgba(0, 0, 0, 0.05),
       0 0 30px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Featured tool card glowing effect - always active with animation */
+  .featured-tool-card {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  .featured-tool-card {
+    position: relative !important;
+    overflow: hidden;
+  }
+
+  .featured-tool-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -3px !important;
+    left: -3px !important;
+    right: -3px !important;
+    bottom: -3px !important;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ef4444, #f59e0b, #10b981, #06b6d4, #3b82f6) !important;
+    background-size: 300% 300% !important;
+    border-radius: 18px !important;
+    z-index: -1 !important;
+    animation: rainbowGlow 2s linear infinite !important;
+  }
+
+  .featured-tool-card::after {
+    content: '' !important;
+    position: absolute !important;
+    top: -6px !important;
+    left: -6px !important;
+    right: -6px !important;
+    bottom: -6px !important;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ef4444, #f59e0b, #10b981, #06b6d4, #3b82f6) !important;
+    background-size: 300% 300% !important;
+    border-radius: 22px !important;
+    z-index: -2 !important;
+    opacity: 0.6 !important;
+    filter: blur(10px) !important;
+    animation: rainbowGlow 2s linear infinite reverse !important;
+  }
+
+  @keyframes rainbowGlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    25% {
+      background-position: 100% 50%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    75% {
+      background-position: 0% 100%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  .featured-tool-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .featured-tool-card:hover::before {
+    animation: rainbowGlow 1s linear infinite !important;
+  }
+
+  .featured-tool-card:hover::after {
+    opacity: 0.8 !important;
+    filter: blur(15px) !important;
+    animation: rainbowGlow 1s linear infinite reverse !important;
   }
 }
