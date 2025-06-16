@@ -30,7 +30,7 @@ Add these environment variables in Render dashboard:
 
 ```bash
 NODE_ENV=production
-NEXT_PUBLIC_BASE_URL=https://your-app-name.onrender.com
+NEXT_PUBLIC_BASE_URL=https://allaitools.dev
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key

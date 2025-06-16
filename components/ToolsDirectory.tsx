@@ -63,6 +63,16 @@ export default function ToolsDirectory() {
     // Filter by category first
     const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory
     
+    // Debug logging for category filtering
+    if (selectedCategory !== 'all' && selectedCategory !== '') {
+      console.log('Filtering debug:', {
+        selectedCategory,
+        toolCategory: tool.category,
+        toolName: tool.name,
+        matches: matchesCategory
+      })
+    }
+    
     // If no search query, return category-filtered results
     if (!searchQuery || searchQuery.trim() === '') {
       return matchesCategory
