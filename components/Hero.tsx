@@ -83,21 +83,29 @@ export default function Hero() {  const [stats, setStats] = useState<Stats>({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
+            className="flex flex-col sm:flex-row gap-6 sm:gap-4 justify-center items-center pt-8 w-full"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div 
+              whileHover={{ scale: 1.03 }} 
+              whileTap={{ scale: 0.98 }}
+              className="w-full sm:w-auto min-w-[200px]"
+            >
               <Link
                 href="/tools"
-                className="btn-primary text-lg px-8 py-4 min-w-[200px]"
+                className="btn-primary text-lg px-8 py-4 w-full text-center block"
               >
                 Browse All Tools
               </Link>
             </motion.div>
             
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div 
+              whileHover={{ scale: 1.03 }} 
+              whileTap={{ scale: 0.98 }}
+              className="w-full sm:w-auto min-w-[200px]"
+            >
               <Link
                 href="/categories"
-                className="btn-secondary text-lg px-8 py-4 min-w-[200px]"
+                className="btn-secondary text-lg px-8 py-4 w-full text-center block"
               >
                 Explore Categories
               </Link>

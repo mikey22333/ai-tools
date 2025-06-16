@@ -171,8 +171,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 <span className="text-blue-600 font-bold text-lg">⭐ {(filteredTools.reduce((sum, tool) => sum + tool.rating, 0) / filteredTools.length || 0).toFixed(1)}</span>
                 <span className="text-gray-600 ml-2">avg rating</span>
               </div>
-            </div></div>        {/* Compact Filters */}
-        <div className="bg-white border border-gray-200 rounded-xl p-6 mb-8 shadow-sm">
+            </div></div>        {/* Enhanced Filters Section */}
+        <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 mb-8 shadow-sm">
+          {/* Search Bar */}
           <div className="relative mb-4">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,6 +191,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               <button
                 onClick={() => setSearchQuery('')}
                 className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                aria-label="Clear search"
               >
                 <svg className="h-4 w-4 text-gray-400 hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -198,52 +200,98 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Sort Filter */}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 min-w-0"
-            >
-              <option value="rating">⭐ Rating</option>
-              <option value="views">👁️ Most Popular</option>
-              <option value="name">📝 Name (A-Z)</option>
-            </select>
+          {/* Filters Row - Made scrollable on mobile */}
+          <div className="overflow-x-auto pb-2 -mx-2 sm:mx-0">
+            <div className="flex items-center gap-3 min-w-max px-2 sm:px-0">
+              {/* Sort Filter */}
+              <div className="flex-shrink-0">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 w-full"
+                >
+                  <option value="rating">⭐ Rating</option>
+                  <option value="views">👁️ Most Popular</option>
+                  <option value="name">📝 Name (A-Z)</option>
+                </select>
+              </div>
 
-            {/* Pricing Filter */}
-            <select
-              value={pricingFilter}
-              onChange={(e) => setPricingFilter(e.target.value)}
-              className="bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 min-w-0"
-            >
-              <option value="all">All Pricing</option>
-              <option value="Free">� Free</option>
-              <option value="Freemium">🆓 Freemium</option>
-              <option value="Paid">💰 Paid</option>
-              <option value="Lifetime Deal">🎯 Lifetime Deal</option>
-            </select>
+              {/* Pricing Filter */}
+              <div className="flex-shrink-0">
+                <select
+                  value={pricingFilter}
+                  onChange={(e) => setPricingFilter(e.target.value)}
+                  className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 w-full"
+                >
+                  <option value="all">All Pricing</option>
+                  <option value="Free">🆓 Free</option>
+                  <option value="Freemium">🔓 Freemium</option>
+                  <option value="Paid">💰 Paid</option>
+                  <option value="Lifetime Deal">🎯 Lifetime Deal</option>
+                </select>
+              </div>
 
-            {/* Verified Badge */}
-            <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg border border-blue-200">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium">Verified</span>
+              {/* Verified Badge */}
+              <div className="flex-shrink-0 hidden sm:flex items-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg border border-blue-200">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-sm font-medium">Verified</span>
+              </div>
+
+              {/* Pricing Filter Chips - Only show on larger screens */}
+              <div className="hidden md:flex items-center gap-2">
+                {['Free', 'Freemium', 'Paid'].map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => setPricingFilter(type)}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                      pricingFilter === type 
+                        ? 'bg-blue-100 text-blue-800' 
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
             </div>
-
-            {/* Pricing Filters */}
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1.5 bg-green-100 text-green-800 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-colors">
-                Free AI
-              </span>
-              <span className="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm font-medium cursor-pointer hover:bg-blue-200 transition-colors">
-                Freemium
-              </span>
-              <span className="px-3 py-1.5 bg-purple-100 text-purple-800 rounded-full text-sm font-medium cursor-pointer hover:bg-purple-200 transition-colors">
-                Paid
-              </span>
-            </div>
-          </div>        </div>
+          </div>
+          
+          {/* Mobile-only filters */}
+          <div className="mt-3 flex flex-wrap gap-2 sm:hidden">
+            <button
+              onClick={() => setPricingFilter('Free')}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                pricingFilter === 'Free' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-gray-100 text-gray-700'
+              }`}
+            >
+              Free AI
+            </button>
+            <button
+              onClick={() => setPricingFilter('Freemium')}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                pricingFilter === 'Freemium' 
+                  ? 'bg-blue-100 text-blue-800' 
+                  : 'bg-gray-100 text-gray-700'
+              }`}
+            >
+              Freemium
+            </button>
+            <button
+              onClick={() => setPricingFilter('Paid')}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                pricingFilter === 'Paid' 
+                  ? 'bg-purple-100 text-purple-800' 
+                  : 'bg-gray-100 text-gray-700'
+              }`}
+            >
+              Paid
+            </button>
+          </div>
+        </div>
 
         {/* Results Count */}
         <div className="mb-6">

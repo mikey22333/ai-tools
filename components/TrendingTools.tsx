@@ -58,12 +58,47 @@ export default function TrendingTools() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-          {featuredTools.map((tool) => (
-            <div key={tool.id}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
+          {featuredTools.map((tool, index) => (
+            <div 
+              key={tool.id}
+              className="featured-tool"
+              style={{
+                animation: `float 3s ease-in-out infinite`,
+                animationDelay: `${index * 0.1}s`,
+                transformOrigin: 'center bottom'
+              }}
+            >
               <ToolCard tool={tool} showTrendingBadge />
             </div>
           ))}
+          <style jsx global>{`
+            .featured-tool {
+              will-change: transform, box-shadow;
+              backface-visibility: hidden;
+              perspective: 1000px;
+              position: relative;
+              border-radius: 0.75rem;
+              padding: 2px;
+              background: linear-gradient(135deg, rgba(99, 102, 241, 0.7), rgba(59, 130, 246, 0.7), rgba(99, 102, 241, 0.7));
+              background-size: 200% 200%;
+              animation: gradient 3s ease infinite, float 3s ease-in-out infinite, glow 3s ease-in-out infinite;
+              box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+            }
+            .featured-tool > :global(div) {
+              border-radius: 0.5rem;
+              overflow: hidden;
+              height: 100%;
+            }
+            .featured-tool:hover {
+              animation-play-state: paused;
+            }
+            @keyframes gradient {
+              0% { background-position: 0% 50%; }
+              50% { background-position: 100% 50%; }
+              100% { background-position: 0% 50%; }
+            }
+          `}</style>
         </div>
       </div>
     </section>

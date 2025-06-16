@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '@/contexts/AuthContext'
+import Button from './ui/Button'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -69,17 +70,19 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button
-              type="button"
-              className="text-gray-600 hover:text-gray-900 focus:outline-none"
+            <Button
+              variant="ghost"
+              size="sm"
+              className="p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               {mobileMenuOpen ? (
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               ) : (
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
