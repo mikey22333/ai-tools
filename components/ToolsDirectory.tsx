@@ -27,24 +27,19 @@ export default function ToolsDirectory() {
         const statsResponse = await fetch('/api/stats')
         const statsData = await statsResponse.json()
         setTotalToolsCount(statsData.tools || toolsData.length)
-          // Transform the data to match the expected types
+        
+        // Transform the data to match the expected types
         const transformedTools: AITool[] = toolsData.map(tool => ({
-          id: tool.id,
-          name: tool.name,
-          description: tool.description,
+          ...tool,
           shortDescription: tool.shortDescription || '',
           logo: tool.logo || '',
-          category: tool.category, // Use the already transformed category field
-          tags: tool.tags || [],
-          rating: tool.rating || 0,
-          pricing: (tool.pricing || 'Free') as 'Free' | 'Freemium' | 'Paid' | 'Lifetime Deal',
-          url: tool.url || '',
           affiliateUrl: tool.affiliateUrl || '',
           featured: tool.featured || false,
           trending: tool.trending || false,
           new: tool.new || false,
           clicks: tool.clicks || 0,
-          views: tool.views || 0
+          views: tool.views || 0,
+          pricing: (tool.pricing || 'Free') as 'Free' | 'Freemium' | 'Paid' | 'Lifetime Deal'
         }))
         
         setTools(transformedTools)
@@ -61,10 +56,51 @@ export default function ToolsDirectory() {
   // Reset display limit when search or category changes
   useEffect(() => {
     setDisplayLimit(100)
-  }, [searchQuery, selectedCategory])  // Filter and sort tools
+  }, [searchQuery, selectedCategory])
+
+  // Debug: Log all categories and tools for inspection
+  useEffect(() => {
+    if (selectedCategory && selectedCategory !== 'all') {
+      console.log('=== DEBUG: CATEGORY DATA ===')
+      console.log('Selected Category ID:', selectedCategory)
+      console.log('All Categories:', categories)
+      console.log('Selected Category Details:', categories.find(c => c.id === selectedCategory))
+      
+      // Log tools that should match the selected category
+      const matchingTools = tools.filter(t => t.category === selectedCategory);
+      console.log(`Found ${matchingTools.length} tools in category ${selectedCategory}`);
+      console.log('Matching Tools:', matchingTools.map(t => ({
+        id: t.id,
+        name: t.name,
+        category: t.category,
+        tags: t.tags
+      })));
+    }
+  }, [selectedCategory, categories, tools])
+
+  // Filter and sort tools
   const filteredTools = tools.filter(tool => {
-    // Filter by category first
-    const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory
+    // Skip filtering if no category is selected
+    if (selectedCategory === 'all' || !selectedCategory) {
+      return true;
+    }
+    
+    // Exact match with category ID
+    const matchesCategory = tool.category === selectedCategory;
+    
+    // Debug logging for category filtering
+    if (selectedCategory !== 'all' && selectedCategory !== '') {
+      console.log('Filtering tool:', {
+        toolId: tool.id,
+        toolName: tool.name,
+        toolCategory: tool.category,
+        selectedCategory,
+        matches: matchesCategory,
+        categoriesMatching: categories.filter(c => c.id === tool.category).length > 0
+      });
+    }
+    
+    return matchesCategory;
     
     // If no search query, return category-filtered results
     if (!searchQuery || searchQuery.trim() === '') {
