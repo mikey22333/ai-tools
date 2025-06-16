@@ -27,19 +27,24 @@ export default function ToolsDirectory() {
         const statsResponse = await fetch('/api/stats')
         const statsData = await statsResponse.json()
         setTotalToolsCount(statsData.tools || toolsData.length)
-        
-        // Transform the data to match the expected types
+          // Transform the data to match the expected types
         const transformedTools: AITool[] = toolsData.map(tool => ({
-          ...tool,
+          id: tool.id,
+          name: tool.name,
+          description: tool.description,
           shortDescription: tool.shortDescription || '',
           logo: tool.logo || '',
+          category: tool.category, // Use the already transformed category field
+          tags: tool.tags || [],
+          rating: tool.rating || 0,
+          pricing: (tool.pricing || 'Free') as 'Free' | 'Freemium' | 'Paid' | 'Lifetime Deal',
+          url: tool.url || '',
           affiliateUrl: tool.affiliateUrl || '',
           featured: tool.featured || false,
           trending: tool.trending || false,
           new: tool.new || false,
           clicks: tool.clicks || 0,
-          views: tool.views || 0,
-          pricing: (tool.pricing || 'Free') as 'Free' | 'Freemium' | 'Paid' | 'Lifetime Deal'
+          views: tool.views || 0
         }))
         
         setTools(transformedTools)
@@ -56,25 +61,15 @@ export default function ToolsDirectory() {
   // Reset display limit when search or category changes
   useEffect(() => {
     setDisplayLimit(100)
-  }, [searchQuery, selectedCategory])
-
-  // Filter and sort tools
+  }, [searchQuery, selectedCategory])  // Filter and sort tools
   const filteredTools = tools.filter(tool => {
     // Filter by category first
     const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory
     
-    // Debug logging for category filtering
-    if (selectedCategory !== 'all' && selectedCategory !== '') {
-      console.log('Filtering debug:', {
-        selectedCategory,
-        toolCategory: tool.category,
-        toolName: tool.name,
-        matches: matchesCategory
-      })
-    }
-    
     // If no search query, return category-filtered results
     if (!searchQuery || searchQuery.trim() === '') {
+      return matchesCategory
+    }
       return matchesCategory
     }
     
