@@ -78,6 +78,11 @@ export default function ToolsDirectory() {
     }
   }, [selectedCategory, categories, tools])
 
+  // Helper function to normalize category IDs (convert spaces to hyphens)
+  const normalizeCategoryId = (id: string) => {
+    return id ? id.toLowerCase().replace(/\s+/g, '-') : '';
+  };
+
   // Filter and sort tools
   const filteredTools = tools.filter(tool => {
     // Skip filtering if no category is selected
@@ -85,8 +90,12 @@ export default function ToolsDirectory() {
       return true;
     }
     
-    // Exact match with category ID
-    const matchesCategory = tool.category === selectedCategory;
+    // Normalize both the tool's category and selected category for comparison
+    const normalizedToolCategory = normalizeCategoryId(tool.category);
+    const normalizedSelectedCategory = normalizeCategoryId(selectedCategory);
+    
+    // Match with normalized category IDs
+    const matchesCategory = normalizedToolCategory === normalizedSelectedCategory;
     
     // Debug logging for category filtering
     if (selectedCategory !== 'all' && selectedCategory !== '') {
@@ -94,9 +103,14 @@ export default function ToolsDirectory() {
         toolId: tool.id,
         toolName: tool.name,
         toolCategory: tool.category,
+        normalizedToolCategory,
         selectedCategory,
+        normalizedSelectedCategory,
         matches: matchesCategory,
-        categoriesMatching: categories.filter(c => c.id === tool.category).length > 0
+        categoriesMatching: categories.some(c => 
+          normalizeCategoryId(c.id) === normalizedToolCategory || 
+          c.id === tool.category
+        )
       });
     }
     
