@@ -134,7 +134,8 @@ export default function EditorsPicks() {
                   href={tool.affiliateUrl || tool.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-primary-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 cursor-pointer relative z-10"
+                  className="bg-gradient-to-r from-primary-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25"
+                  style={{ cursor: 'pointer', zIndex: 9999, position: 'relative' }}
                 >
                   Try Now
                 </Link></div>
