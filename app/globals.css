@@ -207,78 +207,26 @@
       0 20px 25px -5px rgba(0, 0, 0, 0.1),
       0 10px 10px -5px rgba(0, 0, 0, 0.05),
       0 0 30px rgba(59, 130, 246, 0.15);
-  }  /* Featured tool card glowing effect - simpler approach */
+  }  /* Featured tool card - simple styling without glowing effect */
   .featured-tool-card {
     position: relative;
     cursor: default;
-    border-radius: 16px;
-    padding: 2px;
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ef4444, #f59e0b, #10b981, #06b6d4, #3b82f6);
-    background-size: 300% 300%;
-    animation: rainbowGlow 2s linear infinite;
   }
 
   .featured-tool-card .featured-tool-inner {
     background: linear-gradient(135deg, #1f2937, #111827) !important;
-    border-radius: 14px;
-    position: relative;
-    z-index: 1;
-  }  .featured-tool-card * {
-    position: relative;
-    z-index: 2;
+    border-radius: 16px;
+    border: 1px solid #374151;
+    transition: all 0.3s ease;
   }
 
-  /* Ensure interactive elements have proper cursor and z-index */
+  .featured-tool-card:hover .featured-tool-inner {
+    border-color: #6366f1;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.25);
+  }  /* Ensure interactive elements work properly */
   .featured-tool-card a,
-  .featured-tool-card button,
-  .featured-tool-card [role="button"] {
+  .featured-tool-card button {
     cursor: pointer !important;
-    z-index: 100 !important;
-    position: relative !important;
-  }
-
-  /* Specific fix for Try Now buttons */
-  .featured-tool-card a[href] {
-    cursor: pointer !important;
-    pointer-events: auto !important;
-    z-index: 999 !important;
-    position: relative !important;
-  }
-
-  @keyframes rainbowGlow {
-    0% {
-      background-position: 0% 50%;
-    }
-    25% {
-      background-position: 100% 50%;
-    }
-    50% {
-      background-position: 100% 100%;
-    }
-    75% {
-      background-position: 0% 100%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  .featured-tool-card:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-  }
-
-  .featured-tool-card:hover::before {
-    animation: rainbowGlow 1s linear infinite !important;
-  }
-  .featured-tool-card:hover::after {
-    opacity: 0.8 !important;
-    filter: blur(15px) !important;
-    animation: rainbowGlow 1s linear infinite reverse !important;
-  }
-
-  /* Additional cursor fix for nested elements */
-  .featured-tool-card .bg-gradient-to-r {
-    cursor: pointer !important;
-    z-index: 1000 !important;
   }
 }
