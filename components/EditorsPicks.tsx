@@ -65,7 +65,7 @@ export default function EditorsPicks() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredTools.slice(0, 6).map((tool, index) => (            <div key={tool.id} className="featured-tool-card group relative">
+          {featuredTools.slice(0, 6).map((tool, index) => (            <div key={tool.id} className="featured-tool-card group relative cursor-default">
               <div className="featured-tool-inner bg-gradient-to-br from-dark-800 to-dark-700 border border-gray-700 rounded-xl p-6 h-full transition-all duration-300 hover:scale-105">
                 <div className="flex items-start space-x-4 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-white/10 p-2 flex-shrink-0">
@@ -130,15 +130,14 @@ export default function EditorsPicks() {
                 <div className="flex items-center space-x-4 text-xs text-gray-400">
                   <span>{formatNumberWithCommas(tool.views || 0)} views</span>
                   <span>{formatNumberWithCommas(tool.clicks || 0)} clicks</span>
-                </div>
-                <Link
+                </div>                <Link
                   href={tool.affiliateUrl || tool.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-primary-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25"
+                  className="bg-gradient-to-r from-primary-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 cursor-pointer relative z-10"
                 >
                   Try Now
-                </Link>                </div>
+                </Link></div>
               </div>
 
               {tool.featured && (
