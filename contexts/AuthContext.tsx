@@ -1,105 +1,106 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { createContext, useContext, useEffect, useState } from 'react'
 
 interface User {
-  id: string;
-  email: string;
-  isAdmin: boolean;
-  // Add other user properties as needed
+  email: string
+  isAdmin: boolean
 }
 
 interface AuthContextType {
-  user: User | null;
-  isAdmin: boolean;
-  loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>;
-  signOut: () => Promise<void>;
+  user: User | null
+  isAdmin: boolean
+  loading: boolean
+  signIn: (email: string, password: string) => Promise<{ success?: boolean; error?: string }>
+  signOut: () => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  isAdmin: false,
+  loading: true,
+  signIn: async () => ({ error: 'Not implemented' }),
+  signOut: async () => {}
+})
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-
-  useEffect(() => {
-    // Check if user is logged in on initial load
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth/session');
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data.user);
-        }
-      } catch (error) {
-        console.error('Auth check failed:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const signIn = async (email: string, password: string) => {
     try {
       const response = await fetch('/api/admin/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email, password }),
-      });
+      })
 
-      const data = await response.json();
-      
-      if (!response.ok) {
-        return { error: data.error || 'Login failed' };
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setUser(data.user)
+        setIsAdmin(data.user.isAdmin)
+        return { success: true }
+      } else {
+        return { error: data.error || 'Login failed' }
       }
-
-      setUser({
-        id: '1', // You might want to get this from your API
-        email: email,
-        isAdmin: true
-      });
-      
-      router.push('/admin/dashboard');
-      return { error: null };
     } catch (error) {
-      console.error('Login error:', error);
-      return { 
-        error: error instanceof Error ? error.message : 'An unexpected error occurred' 
-      };
+      console.error('Login error:', error)
+      return { error: 'Network error' }
     }
-  };
+  }
 
   const signOut = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      setUser(null);
-      router.push('/admin/login');
+      await fetch('/api/admin/logout', {
+        method: 'POST',
+      })
     } catch (error) {
-      console.error('Logout error:', error);
-      throw error;
+      console.error('Logout error:', error)
     }
-  };
+    
+    setUser(null)
+    setIsAdmin(false)
+  }
 
-  const value = {
-    user,
-    isAdmin: user?.isAdmin || false,
-    loading,
-    signIn,
-    signOut,
-  };
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch('/api/admin/me')
+      if (response.ok) {
+        const data = await response.json()
+        if (data.user) {
+          setUser(data.user)
+          setIsAdmin(data.user.isAdmin)
+        }
+      }
+    } catch (error) {
+      console.error('Auth check error:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  useEffect(() => {
+    checkAuthStatus()
+  }, [])
+
+  return (
+    <AuthContext.Provider value={{
+      user,
+      isAdmin,
+      loading,
+      signIn,
+      signOut
+    }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+export const useAuth = () => {
+  const context = useContext(AuthContext)
+  return context
 }

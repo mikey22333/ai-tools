@@ -48,25 +48,29 @@ export default function SubmitToolPage() {
     { id: 'video-animation', label: 'Video & Animation' },
     { id: 'voice-generation-conversion', label: 'Voice Generation & Conversion' },
     { id: 'coding-development', label: 'Coding & Development' },
-    { id: 'research-data-analysis', label: 'Research & Data Analysis' },
     { id: 'business-management', label: 'Business & Management' },
     { id: 'marketing-advertising', label: 'Marketing & Advertising' },
     { id: 'education-translation', label: 'Education & Translation' },
     { id: 'health-wellness', label: 'Health & Wellness' },
-    { id: 'office-productivity', label: 'Office & Productivity' },
-    { id: 'social-media', label: 'Social Media' },
-    { id: 'daily-life', label: 'Daily Life' },
-    { id: 'art-creative', label: 'Art & Creative' },
     { id: 'music-audio', label: 'Music & Audio' },
+    { id: 'research-data-analysis', label: 'Research & Data Analysis' },
+    { id: 'office-productivity', label: 'Office & Productivity' },
+    { id: 'daily-life', label: 'Daily Life' },
     { id: 'legal-finance', label: 'Legal & Finance' },
-    { id: 'image-analysis', label: 'Image Analysis' },
+    { id: 'social-media', label: 'Social Media' },
+    { id: 'art-creative', label: 'Art & Creative' },
     { id: 'interior-architectural-design', label: 'Interior & Architectural Design' },
-    { id: 'business-research', label: 'Business Research' },
-    { id: 'automations', label: 'Automations' }
+    { id: 'automations', label: 'Automations' },
+    { id: 'image-analysis', label: 'Image Analysis' },
+    { id: 'business-research', label: 'Business Research' }
   ]
 
-  const pricingModels = ['Free', 'Freemium', 'Paid', 'Lifetime Deal']
-
+  const pricingOptions = [
+    { value: 'Free', label: 'Free' },
+    { value: 'Freemium', label: 'Freemium' },
+    { value: 'Paid', label: 'Paid' },
+    { value: 'Lifetime Deal', label: 'Lifetime Deal' }
+  ]
   const targetAudiences = [
     'Developers', 'Content Creators', 'Marketers', 'Designers', 'Students', 
     'Researchers', 'Business Professionals', 'Entrepreneurs', 'Writers', 
@@ -87,14 +91,13 @@ export default function SubmitToolPage() {
       })
 
       const result = await response.json()
-      
+
       if (!response.ok) {
         throw new Error(result.error || 'Failed to submit tool')
       }
 
-      // Only process payment if the user requested featured listing AND payment is required
+      // Only redirect to payment if user requested featured AND payment is required
       if (formData.requestFeatured && result.requiresPayment) {
-        // Redirect to payment for featured listing
         const paymentResponse = await fetch('/api/payment/create-session', {
           method: 'POST',
           headers: {
@@ -102,7 +105,7 @@ export default function SubmitToolPage() {
           },
           body: JSON.stringify({
             submissionId: result.submissionId,
-            featuredType: 'basic' // Can be made dynamic based on user selection
+            featuredType: 'basic'
           }),
         })
 
@@ -118,7 +121,7 @@ export default function SubmitToolPage() {
 
       alert(result.message)
       
-      // Reset form
+      // Reset form on successful submission
       setFormData({
         toolName: '',
         tagline: '',
@@ -187,7 +190,6 @@ export default function SubmitToolPage() {
       }))
     }
   }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 pt-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -230,42 +232,27 @@ export default function SubmitToolPage() {
                   <input
                     type="text"
                     name="toolName"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Enter your AI tool name"
                     value={formData.toolName}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="Enter your AI tool name"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Website URL *
+                    Tagline
                   </label>
                   <input
-                    type="url"
-                    name="website"
-                    value={formData.website}
+                    type="text"
+                    name="tagline"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Brief description of your tool"
+                    value={formData.tagline}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="https://yourtool.com"
                   />
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Tagline
-                </label>
-                <input
-                  type="text"
-                  name="tagline"
-                  value={formData.tagline}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                  placeholder="Brief catchy description of your tool"
-                />
               </div>
 
               <div>
@@ -274,13 +261,44 @@ export default function SubmitToolPage() {
                 </label>
                 <textarea
                   name="description"
-                  value={formData.description}
-                  onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                  placeholder="Detailed description of your AI tool, its capabilities, and use cases..."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Detailed description of your AI tool, its features, and capabilities"
+                  value={formData.description}
+                  onChange={handleChange}
                 />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Website URL *
+                  </label>
+                  <input
+                    type="url"
+                    name="website"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="https://yourtool.com"
+                    value={formData.website}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Logo URL
+                  </label>
+                  <input
+                    type="url"
+                    name="logoUrl"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="https://yourtool.com/logo.png"
+                    value={formData.logoUrl}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
 
@@ -300,16 +318,14 @@ export default function SubmitToolPage() {
                   </label>
                   <select
                     name="category"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     value={formData.category}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:border-blue-500 transition-colors"
                   >
                     <option value="">Select a category</option>
-                    {categories.map(category => (
-                      <option key={category.id} value={category.id}>
-                        {category.label}
-                      </option>
+                    {categories.map(cat => (
+                      <option key={cat.id} value={cat.id}>{cat.label}</option>
                     ))}
                   </select>
                 </div>
@@ -320,16 +336,14 @@ export default function SubmitToolPage() {
                   </label>
                   <select
                     name="pricing"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     value={formData.pricing}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:border-blue-500 transition-colors"
                   >
                     <option value="">Select pricing model</option>
-                    {pricingModels.map(model => (
-                      <option key={model} value={model}>
-                        {model}
-                      </option>
+                    {pricingOptions.map(option => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                   </select>
                 </div>
@@ -342,10 +356,10 @@ export default function SubmitToolPage() {
                 <input
                   type="text"
                   name="tags"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  placeholder="ai, chatbot, gpt, assistant"
                   value={formData.tags}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                  placeholder="ai, chatbot, gpt, assistant"
                 />
                 <p className="text-sm text-gray-500 mt-1">
                   Add relevant tags to help users find your tool (e.g., ai, chatbot, gpt, assistant)
@@ -370,11 +384,11 @@ export default function SubmitToolPage() {
                   <input
                     type="email"
                     name="email"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="your@email.com"
                     value={formData.email}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="your@email.com"
                   />
                 </div>
 
@@ -385,59 +399,75 @@ export default function SubmitToolPage() {
                   <input
                     type="text"
                     name="companyName"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Your company name"
                     value={formData.companyName}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="Your company name"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Featured Placement */}
+            {/* Featured Listing Section */}
             <div className="space-y-6">
               <h2 className="text-2xl font-semibold text-gray-800 border-b border-gray-200 pb-3 flex items-center">
                 <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white font-bold">⭐</span>
+                  <span className="text-white font-bold">🌟</span>
                 </div>
-                🌟 Featured Placement
-              </h2>
-
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6">
-                <div className="flex items-start space-x-3">
-                  <input
-                    type="checkbox"
-                    id="requestFeatured"
-                    name="requestFeatured"
-                    checked={formData.requestFeatured}
-                    onChange={handleChange}
-                    className="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
+                Featured Placement
+              </h2>              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 pt-1">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="checkbox"
+                        name="requestFeatured"
+                        checked={formData.requestFeatured}
+                        onChange={handleChange}
+                        className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <span className="ml-3 text-lg font-semibold text-gray-800">
+                        Feature this tool
+                      </span>
+                    </label>                  </div>
                   <div className="flex-1">
-                    <label htmlFor="requestFeatured" className="text-lg font-semibold text-gray-800 cursor-pointer">
-                      Feature this tool
-                      <span className="text-blue-600 ml-2 font-bold">$9.99</span>
-                    </label>
-                    <p className="text-gray-600 mt-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-2xl font-bold text-blue-600">$9.99</span>
+                      <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full">One-time fee</span>
+                    </div>
+                    <p className="text-gray-600 mb-3">
                       Get your tool featured on our homepage and category pages for maximum visibility.
                     </p>
-                    <div className="mt-2 text-sm text-gray-500">
-                      <span className="font-medium">✓</span> Homepage placement<br/>
-                      <span className="font-medium">✓</span> Category page priority<br/>
-                      <span className="font-medium">✓</span> Enhanced listing badge
+                    
+                    <div className="text-sm text-gray-500 mb-3">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span>✓</span>
+                        <span>Homepage placement</span>
+                      </div>
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span>✓</span>
+                        <span>Category page priority</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span>✓</span>
+                        <span>Enhanced listing badge</span>
+                      </div>
                     </div>
+                    
                     {formData.requestFeatured && (
-                      <div className="mt-3">
-                        <input
-                          type="checkbox"
-                          id="featuredConfirm"
-                          name="featuredConfirm"
-                          className="mr-2 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                        />
-                        <label htmlFor="featuredConfirm" className="text-sm text-gray-600">
-                          Yes, feature my tool for $9.99
-                        </label>
-                        <p className="text-xs text-blue-600 mt-1">
+                      <div className="mt-4 p-4 bg-blue-100 rounded-lg">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <input
+                            type="checkbox"
+                            id="featuredConsent"
+                            required={formData.requestFeatured}
+                            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                          />
+                          <label htmlFor="featuredConsent" className="text-sm font-medium text-gray-700">
+                            Yes, feature my tool for $9.99 (one-time fee)
+                          </label>
+                        </div>
+                        <p className="text-sm text-blue-600">
                           You'll be redirected to complete the payment after form submission.
                         </p>
                       </div>
@@ -445,28 +475,46 @@ export default function SubmitToolPage() {
                   </div>
                 </div>
               </div>
+
+              {formData.requestFeatured && (
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Why should your tool be featured? (Optional)
+                  </label>
+                  <textarea
+                    name="featuredReason"
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Tell us what makes your tool special and why it deserves featured placement"
+                    value={formData.featuredReason}
+                    onChange={handleChange}
+                  />
+                </div>
+              )}
             </div>
 
             {/* What happens next */}
-            <div className="bg-gray-100 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">What happens next?</h3>
-              <ul className="space-y-2 text-gray-600 text-sm">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">What happens next?</h3>
+              <ul className="space-y-2 text-gray-300 text-sm">
                 <li className="flex items-start space-x-2">
-                  <span className="text-blue-500 mt-1">•</span>
+                  <span className="text-blue-400 mt-1">•</span>
                   <span>We'll review your submission within 2-3 business days</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <span className="text-blue-500 mt-1">•</span>
+                  <span className="text-blue-400 mt-1">•</span>
                   <span>If approved, your tool will be added to our directory</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <span className="text-blue-500 mt-1">•</span>
+                  <span className="text-blue-400 mt-1">•</span>
                   <span>You'll receive a confirmation email with your listing link</span>
                 </li>
-                <li className="flex items-start space-x-2">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Featured requests are reviewed separately with additional criteria</span>
-                </li>
+                {formData.requestFeatured && (
+                  <li className="flex items-start space-x-2">
+                    <span className="text-yellow-400 mt-1">⭐</span>
+                    <span>Featured tools get premium placement and priority review</span>
+                  </li>
+                )}
               </ul>
             </div>
 
@@ -475,22 +523,25 @@ export default function SubmitToolPage() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-lg py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <div className="flex items-center justify-center space-x-2">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                   <span>Submitting...</span>
-                </div>
-              ) : (
+                </div>              ) : (
                 <>
-                  Submit Your AI Tool
+                  {formData.requestFeatured ? 'Submit & Pay for Featured Listing ($9.99)' : 'Submit Your AI Tool'}
                   {formData.requestFeatured && (
                     <span className="ml-2">🌟</span>
                   )}
                 </>
               )}
             </motion.button>
+
+            <p className="text-center text-sm text-gray-500">
+              All submissions are reviewed by our team before being published.
+            </p>
           </form>
         </motion.div>
 
