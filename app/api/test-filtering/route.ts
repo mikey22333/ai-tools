@@ -6,11 +6,9 @@ export async function GET() {
     const [tools, categories] = await Promise.all([
       toolsService.getTools(),
       toolsService.getCategories()
-    ])
-
-    // Test several category filters
+    ])    // Test several category filters
     const testCategories = ['coding-development', 'art-creative-design', 'chatbots-virtual-companions']
-    const filterResults = {}
+    const filterResults: Record<string, any> = {}
 
     testCategories.forEach(categoryId => {
       const filteredTools = tools.filter(tool => tool.category === categoryId)
