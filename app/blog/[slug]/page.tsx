@@ -78,9 +78,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 // Enable ISR - revalidate every hour
 export const revalidate = 3600
 
-// Add cache tags for targeted revalidation
-export const tags = ['blog-posts']
-
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   let post
   

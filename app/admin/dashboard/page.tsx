@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import AdminProtection from '@/components/AdminProtection'
 import { useAuth } from '@/contexts/AuthContext'
@@ -37,11 +37,7 @@ export default function AdminDashboard() {
     rejectionReason: ''
   })
 
-  useEffect(() => {
-    fetchSubmissions()
-  }, [statusFilter])
-
-  const fetchSubmissions = async () => {
+  const fetchSubmissions = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/admin/submissions?status=${statusFilter}`)
@@ -54,7 +50,11 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [statusFilter])
+
+  useEffect(() => {
+    fetchSubmissions()
+  }, [fetchSubmissions])
 
   const handleReview = (submission: Submission) => {
     setSelectedSubmission(submission)

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { BlogService } from '@/services/blogService'
 import type { BlogPost } from '@/services/blogService'
 import RichTextEditor from './RichTextEditor'
@@ -188,14 +189,15 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
             onChange={(e) => setFormData(prev => ({ ...prev, thumbnail: e.target.value }))}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="https://example.com/image.jpg"
-          />
-          {formData.thumbnail && (
+          />          {formData.thumbnail && (
             <div className="mt-2">
-              <img
+              <Image
                 src={formData.thumbnail}
                 alt="Thumbnail preview"
+                width={128}
+                height={80}
                 className="w-32 h-20 object-cover rounded border"
-                onError={(e) => {
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   e.currentTarget.style.display = 'none'
                 }}
               />
