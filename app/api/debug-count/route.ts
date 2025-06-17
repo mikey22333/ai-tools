@@ -33,10 +33,8 @@ export async function GET() {
 
     if (limitedError) {
       console.error('Limited tools error:', limitedError)
-    }
-
-    // Count tools by category from the unlimited fetch
-    const categoryCount = {}
+    }    // Count tools by category from the unlimited fetch
+    const categoryCount: Record<string, number> = {}
     allTools?.forEach(tool => {
       const cat = tool.category_id
       categoryCount[cat] = (categoryCount[cat] || 0) + 1
@@ -45,9 +43,8 @@ export async function GET() {
     return NextResponse.json({
       totalCount,
       actualFetched: allTools?.length || 0,
-      limitedFetched: limitedTools?.length || 0,
-      topCategories: Object.entries(categoryCount)
-        .sort(([,a], [,b]) => b - a)
+      limitedFetched: limitedTools?.length || 0,      topCategories: Object.entries(categoryCount)
+        .sort(([,a], [,b]) => (b as number) - (a as number))
         .slice(0, 10)
         .map(([cat, count]) => ({ category: cat, count })),
       debug: {
