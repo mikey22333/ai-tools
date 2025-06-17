@@ -36,14 +36,11 @@ export default function Footer() {
                 </svg>
               </a>
             </div>
-          </div>
-
-          {/* Quick Links */}
+          </div>          {/* Quick Links */}
           <div>
             <h3 className="font-semibold text-gray-900 mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li><Link href="/categories" className="text-gray-600 hover:text-primary-600 transition-colors">Categories</Link></li>
-              <li><Link href="/new-tools" className="text-gray-600 hover:text-primary-600 transition-colors">New Tools</Link></li>
               <li><Link href="/blog" className="text-gray-600 hover:text-primary-600 transition-colors">Blog</Link></li>
               <li><Link href="/submit-tool" className="text-gray-600 hover:text-primary-600 transition-colors">Submit Tool</Link></li>
               <li><Link href="/privacy" className="text-gray-600 hover:text-primary-600 transition-colors">Privacy Policy</Link></li>

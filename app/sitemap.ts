@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 import { supabase } from '@/lib/supabase'
-import { blogPosts } from '@/data/blog'
+import { BlogService } from '@/services/blogService'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://allaitools.dev'
@@ -42,12 +42,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,
-    },
-    {
+    },    {
       url: `${baseUrl}/submit-tool`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
     },
   ]
 
@@ -78,32 +89,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(tool.updated_at || new Date()),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
-    })) || []
-
-    // Get blog posts from database or fallback to static data
+    })) || []    // Get blog posts from database
     let blogPages: any[] = []
     
     try {
-      const { data: dbBlogPosts } = await supabase
-        .from('blog_posts')
-        .select('slug, updated_at, created_at')
-        .eq('published', true)
-        .order('created_at', { ascending: false })
-
-      blogPages = dbBlogPosts?.map((post) => ({
+      const posts = await BlogService.getPublishedPosts()
+      blogPages = posts.map((post) => ({
         url: `${baseUrl}/blog/${post.slug}`,
         lastModified: new Date(post.updated_at || post.created_at),
         changeFrequency: 'monthly' as const,
         priority: 0.7,
-      })) || []
-    } catch {
-      // Fallback to static blog posts
-      blogPages = blogPosts.map((post) => ({
-        url: `${baseUrl}/blog/${post.id}`,
-        lastModified: new Date(post.publishedAt),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
       }))
+    } catch (error) {
+      console.error('Error fetching blog posts for sitemap:', error)
+      blogPages = []
     }
 
     // Add category-specific blog pages
@@ -119,14 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch (error) {
     console.error('Error generating sitemap:', error)
     
-    // Fallback: Generate sitemap with static blog posts only
-    const fallbackBlogPages = blogPosts.map((post) => ({
-      url: `${baseUrl}/blog/${post.id}`,
-      lastModified: new Date(post.publishedAt),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    }))
-
-    return [...staticPages, ...fallbackBlogPages]
+    // Fallback: Generate sitemap with essential pages only
+    return staticPages
   }
 }

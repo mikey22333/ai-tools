@@ -63,7 +63,6 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose',
   },
-  
   // Security headers
   async headers() {
     return [
@@ -82,7 +81,54 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin',
           },
+          {
+            key: 'X-Robots-Tag',
+            value: 'index, follow',
+          },
         ],
+      },
+      {
+        source: '/admin/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+    ];
+  },
+  // Redirects for SEO and URL consistency
+  async redirects() {
+    return [
+      {
+        source: '/new-tool',
+        destination: '/submit-tool',
+        permanent: true, // 301 redirect
+      },
+      {
+        source: '/add-tool',
+        destination: '/submit-tool',
+        permanent: true, // 301 redirect
+      },
+      {
+        source: '/submit',
+        destination: '/submit-tool',
+        permanent: true, // 301 redirect
+      },
+      {
+        source: '/new-tools',
+        destination: '/tools',
+        permanent: true, // 301 redirect
       },
     ];
   },

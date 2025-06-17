@@ -1,105 +1,262 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
+import Image from 'next/image'
+import { BlogService } from '@/services/blogService'
 
 export const metadata: Metadata = {
-  title: 'Blog - Coming Soon | AllAiTools',
-  description: 'Our AI tools blog is coming soon. Stay tuned for the latest insights, tutorials, and news about AI tools and artificial intelligence technology.',
+  title: 'AI Tools Blog | Latest Insights, Reviews & Tutorials | AllAiTools',
+  description: 'Discover the latest AI tools insights, comprehensive reviews, tutorials, and industry trends. Stay updated with the most innovative artificial intelligence tools and technologies.',
+  keywords: 'AI tools blog, artificial intelligence, AI reviews, AI tutorials, machine learning, AI news',
+  openGraph: {
+    title: 'AI Tools Blog - Latest Insights & Reviews',
+    description: 'Discover the latest AI tools insights, comprehensive reviews, tutorials, and industry trends.',
+    type: 'website',
+    url: 'https://allaitools.com/blog',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Tools Blog - Latest Insights & Reviews',
+    description: 'Discover the latest AI tools insights, comprehensive reviews, tutorials, and industry trends.',
+  }
 }
 
-export default function Blog() {
+// Enable ISR - revalidate every hour
+export const revalidate = 3600
+
+export default async function BlogPage() {
+  let posts: any[] = []
+  try {
+    posts = await BlogService.getPublishedPosts()
+  } catch (error) {
+    console.error('Error fetching blog posts:', error)
+    posts = []
+  }
+
+  // Get featured posts (first 3 posts)
+  const featuredPosts = posts.slice(0, 3)
+  const relatedPosts = posts.slice(3, 8) // Get 5 related posts for sidebar
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="w-24 h-24 bg-gradient-to-br from-primary-400 to-blue-500 rounded-full flex items-center justify-center mb-8 mx-auto">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <div className="w-6 h-6 bg-gradient-to-br from-primary-400 to-blue-500 rounded-full animate-pulse"></div>
+    <div className="min-h-screen bg-gray-100">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">B</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">AI Tools Blog</h1>
+                <p className="text-gray-600 text-sm">Latest insights and reviews</p>
               </div>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Blog <span className="text-primary-600 dark:text-primary-400">Coming Soon</span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-              Our team is working hard to bring you the latest insights, tutorials, and news about AI tools and artificial intelligence technology.
-            </p>
-
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 max-w-2xl mx-auto">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                What to Expect
-              </h2>
-              <ul className="text-left space-y-3 text-gray-600 dark:text-gray-300">
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>In-depth AI tool reviews and comparisons</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Step-by-step tutorials and guides</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Industry news and AI trends analysis</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Expert insights and best practices</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Case studies and success stories</span>
-                </li>
-              </ul>
+            <div className="flex items-center space-x-4">
+              <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </button>
+              <div className="text-sm text-gray-500">
+                Today • {new Date().toLocaleDateString('en-US', { 
+                  day: 'numeric', 
+                  month: 'long', 
+                  year: 'numeric' 
+                })}
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Notification Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Get Notified When We Launch
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Be the first to know when our blog goes live with exclusive AI insights.
-          </p>
-          <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              required
-              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-            <button
-              type="submit"
-              className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-            >
-              Notify Me
-            </button>
-          </form>
-        </div>
-      </section>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-900">Latest Posts</h2>
+                <div className="text-sm text-gray-500">
+                  Today • {new Date().toLocaleDateString('en-US', { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                  })}
+                </div>
+              </div>
 
-      {/* Development Status */}
-      <section className="py-16 bg-gray-100 dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-primary-50 dark:bg-primary-900/20 rounded-xl p-8">
-            <div className="flex items-center justify-center mb-4">
-              <div className="w-3 h-3 bg-primary-500 rounded-full animate-pulse mr-3"></div>
-              <span className="text-primary-700 dark:text-primary-300 font-medium">
-                Currently in Development
-              </span>
+              {posts.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No posts yet</h3>
+                  <p className="text-gray-500">Check back soon for amazing AI tools content!</p>
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  {featuredPosts.map((post, index) => (
+                    <article key={post.id} className="group">
+                      <Link href={`/blog/${post.slug}`} className="block">
+                        <div className="flex flex-col md:flex-row gap-6">
+                          {/* Image */}
+                          <div className="md:w-80 flex-shrink-0">
+                            <div className="relative h-48 md:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-purple-400 to-pink-400">
+                              {post.thumbnail ? (
+                                <Image
+                                  src={post.thumbnail}
+                                  alt={post.title}
+                                  fill
+                                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                  sizes="(max-width: 768px) 100vw, 320px"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Content */}
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2 mb-3">
+                              <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
+                                AI Tools
+                              </span>
+                              <span className="text-sm text-gray-500">
+                                {BlogService.formatDate(post.published_at || post.created_at)}
+                              </span>
+                            </div>
+
+                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                              {post.title}
+                            </h3>
+
+                            {post.excerpt && (
+                              <p className="text-gray-600 mb-4 line-clamp-3">
+                                {post.excerpt}
+                              </p>
+                            )}
+
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                                  <span className="text-xs font-medium text-gray-600">AI</span>
+                                </div>
+                                <div>
+                                  <p className="text-sm font-medium text-gray-900">AI Tools Team</p>
+                                  <p className="text-xs text-gray-500">Expert Reviewer</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                                Read More
+                                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </article>
+                  ))}
+                </div>
+              )}
             </div>
-            <p className="text-gray-600 dark:text-gray-300">
-              Our development team is actively working on bringing you a comprehensive blog experience. 
-              Check back soon for updates!
-            </p>
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">Related Posts</h3>
+              <div className="space-y-6">
+                {relatedPosts.length > 0 ? (
+                  relatedPosts.map((post, index) => (
+                    <article key={post.id} className="group">
+                      <Link href={`/blog/${post.slug}`} className="block">
+                        <div className="flex space-x-4">
+                          <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-blue-400 to-purple-500">
+                            {post.thumbnail ? (
+                              <Image
+                                src={post.thumbnail}
+                                alt={post.title}
+                                width={64}
+                                height={64}
+                                className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center space-x-2 mb-1">
+                              <span className="px-2 py-0.5 bg-green-100 text-green-800 text-xs font-medium rounded">
+                                AI Tools
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                {BlogService.formatDate(post.published_at || post.created_at)}
+                              </span>
+                            </div>
+                            <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                              {post.title}
+                            </h4>
+                          </div>
+                        </div>
+                      </Link>
+                    </article>
+                  ))
+                ) : (
+                  // Placeholder related posts when no posts are available
+                  Array.from({ length: 5 }).map((_, index) => (
+                    <div key={index} className="flex space-x-4">
+                      <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-gray-200 animate-pulse"></div>
+                      <div className="flex-1 min-w-0">
+                        <div className="h-3 bg-gray-200 rounded mb-2 animate-pulse"></div>
+                        <div className="h-2 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mt-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
+              <div className="space-y-2">
+                <Link href="/blog?category=AI+Tools" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <span className="text-sm font-medium text-gray-700">AI Tools</span>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{posts.length}</span>
+                </Link>
+                <Link href="/blog?category=Reviews" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <span className="text-sm font-medium text-gray-700">Reviews</span>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{Math.floor(posts.length / 2)}</span>
+                </Link>
+                <Link href="/blog?category=Tutorials" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <span className="text-sm font-medium text-gray-700">Tutorials</span>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{Math.floor(posts.length / 3)}</span>
+                </Link>
+                <Link href="/blog?category=Industry+News" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <span className="text-sm font-medium text-gray-700">Industry News</span>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{Math.floor(posts.length / 4)}</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   )
 }

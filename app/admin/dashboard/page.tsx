@@ -100,10 +100,9 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8 flex justify-between items-center"
-          >
-            <div>
+          >            <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-              <p className="text-gray-600">Review and manage tool submissions</p>
+              <p className="text-gray-600">Manage tool submissions, blog content, and site analytics</p>
             </div>
             <button
               onClick={signOut}
@@ -113,7 +112,101 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
               <span>Sign Out</span>
-            </button>
+            </button>          </motion.div>
+
+          {/* Quick Actions */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+          >
+            {/* Blog Management */}
+            <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Blog</h3>
+                  <p className="text-sm text-gray-600">Manage posts</p>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <a
+                  href="/admin/blog"
+                  className="block w-full bg-blue-500 text-white text-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  Manage Blog
+                </a>
+                <a
+                  href="/blog"
+                  target="_blank"
+                  className="block w-full bg-gray-100 text-gray-700 text-center py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors"
+                >
+                  View Blog
+                </a>
+              </div>
+            </div>
+
+            {/* Tool Submissions Stats */}
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Pending</h3>
+                  <p className="text-2xl font-bold text-green-600">
+                    {submissions.filter(s => s.status === 'pending').length}
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600">Tools awaiting review</p>
+            </div>
+
+            {/* Approved Tools */}
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Approved</h3>
+                  <p className="text-2xl font-bold text-blue-600">
+                    {submissions.filter(s => s.status === 'approved').length}
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600">Live tools</p>
+            </div>
+
+            {/* Site Analytics */}
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Analytics</h3>
+                  <p className="text-sm text-gray-600">Site stats</p>
+                </div>
+              </div>
+              <a
+                href="/admin/analytics"
+                className="block w-full bg-purple-500 text-white text-center py-2 px-4 rounded-lg hover:bg-purple-600 transition-colors"
+              >
+                View Analytics
+              </a>
+            </div>
           </motion.div>
 
           {/* Status Filter */}

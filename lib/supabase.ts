@@ -2,12 +2,22 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key'
 
 if (!supabaseUrl || !supabaseKey) {
   console.warn('Missing Supabase environment variables - using placeholders')
 }
 
+// Public client for normal operations
 export const supabase = createClient(supabaseUrl, supabaseKey)
+
+// Admin client with service role key for admin operations (bypasses RLS)
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+})
 
 // Type definitions for database tables
 export type Database = {
@@ -103,6 +113,44 @@ export type Database = {
           new?: boolean
           clicks?: number
           views?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      posts: {
+        Row: {
+          id: string
+          title: string
+          slug: string
+          excerpt: string | null
+          content: string
+          thumbnail: string | null
+          is_published: boolean
+          published_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          slug: string
+          excerpt?: string | null
+          content: string
+          thumbnail?: string | null
+          is_published?: boolean
+          published_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          slug?: string
+          excerpt?: string | null
+          content?: string
+          thumbnail?: string | null
+          is_published?: boolean
+          published_at?: string | null
           created_at?: string
           updated_at?: string
         }

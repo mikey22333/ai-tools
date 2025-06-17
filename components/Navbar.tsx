@@ -45,16 +45,8 @@ export default function Navbar() {
                 </Link>
               ))}
             </div>
-          </div>          {/* CTA Button & Admin Link */}
+          </div>          {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
-            {isAdmin && (
-              <Link
-                href="/admin/dashboard"
-                className="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 rounded-lg"
-              >
-                Admin
-              </Link>
-            )}
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -95,25 +87,16 @@ export default function Navbar() {
           exit={{ opacity: 0, y: -20 }}
           className="md:hidden glass-effect border-t border-gray-200"
         >
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navigation.map((item) => (
+          <div className="px-2 pt-2 pb-3 space-y-1">            {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-200"
-                onClick={() => setMobileMenuOpen(false)}              >
-                {item.name}
-              </Link>            ))}
-            {isAdmin && (
-              <Link
-                key="admin"
-                href="/admin/dashboard"
-                className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Admin
+                {item.name}
               </Link>
-            )}
+            ))}
             <div className="pt-2">
               <Link
                 href="/submit-tool"
