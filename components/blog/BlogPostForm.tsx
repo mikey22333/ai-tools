@@ -48,15 +48,19 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
-    
+
     if (!formData.title.trim()) {
       newErrors.title = 'Title is required'
     }
-    
+
     if (!formData.slug.trim()) {
       newErrors.slug = 'Slug is required'
     }
-    
+
+    if (!formData.excerpt.trim()) {
+      newErrors.excerpt = 'Excerpt is required'
+    }
+
     if (!formData.content.trim()) {
       newErrors.content = 'Content is required'
     }
@@ -121,14 +125,14 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
     <div className="max-w-4xl mx-auto">
       <form onSubmit={handleSubmit} className="space-y-6">
         {errors.submit && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <p className="text-red-800 dark:text-red-200">{errors.submit}</p>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-red-800">{errors.submit}</p>
           </div>
         )}
 
         {/* Title */}
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
             Title *
           </label>
           <input
@@ -136,7 +140,7 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
             id="title"
             value={formData.title}
             onChange={(e) => handleTitleChange(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Enter post title..."
           />
           {errors.title && <p className="text-red-600 text-sm mt-1">{errors.title}</p>}
@@ -144,7 +148,7 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
 
         {/* Slug */}
         <div>
-          <label htmlFor="slug" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="slug" className="block text-sm font-medium text-gray-700 mb-2">
             Slug *
           </label>
           <input
@@ -152,33 +156,34 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
             id="slug"
             value={formData.slug}
             onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="post-url-slug"
           />
           {errors.slug && <p className="text-red-600 text-sm mt-1">{errors.slug}</p>}
           <p className="text-gray-500 text-sm mt-1">
-            URL: /blog/{formData.slug}
+            URL: /blog/{formData.slug || 'your-post-slug'}
           </p>
         </div>
 
         {/* Excerpt */}
         <div>
-          <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Excerpt
+          <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700 mb-2">
+            Excerpt *
           </label>
           <textarea
             id="excerpt"
-            rows={3}
             value={formData.excerpt}
             onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Brief description of the post..."
+            rows={3}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Brief description of your post..."
           />
+          {errors.excerpt && <p className="text-red-600 text-sm mt-1">{errors.excerpt}</p>}
         </div>
 
         {/* Thumbnail */}
         <div>
-          <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700 mb-2">
             Thumbnail URL
           </label>
           <input
@@ -186,24 +191,26 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
             id="thumbnail"
             value={formData.thumbnail}
             onChange={(e) => setFormData(prev => ({ ...prev, thumbnail: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="https://example.com/image.jpg"
-          />          {formData.thumbnail && (
+          />
+          {formData.thumbnail && (
             <div className="mt-2">
               <Image
                 src={formData.thumbnail}
                 alt="Thumbnail preview"
-                width={128}
-                height={80}
-                className="w-32 h-20 object-cover rounded border"
+                width={200}
+                height={100}
+                className="rounded-lg object-cover"
                 onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   e.currentTarget.style.display = 'none'
                 }}
               />
             </div>
           )}
-        </div>        {/* Content */}
-        <div>        {/* Content */}
+        </div>
+
+        {/* Content */}
         <div>
           <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
             Content *
@@ -214,7 +221,12 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
             onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
             placeholder="Write your post content..."
             rows={20}
-            cl        {/* Publish Status */}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical font-mono text-sm"
+          />
+          {errors.content && <p className="text-red-600 text-sm mt-1">{errors.content}</p>}
+        </div>
+
+        {/* Publish Status */}
         <div>
           <label className="flex items-center">
             <input
@@ -230,25 +242,15 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
               (This post will be visible to the public)
             </span>
           </label>
-        </div>lassName="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              Publish this post
-            </span>
-          </label>
-          <p className="text-gray-500 text-sm mt-1">
-            {formData.is_published 
-              ? 'This post will be visible to the public' 
-              : 'This post will be saved as a draft'
-            }
-          </p>
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
           {onCancel && (
             <button
               type="button"
               onClick={onCancel}
-              className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>
@@ -256,9 +258,19 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
           >
-            {loading ? 'Saving...' : (post ? 'Update Post' : 'Create Post')}
+            {loading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                {post ? 'Updating...' : 'Creating...'}
+              </>
+            ) : (
+              post ? 'Update Post' : 'Create Post'
+            )}
           </button>
         </div>
       </form>
