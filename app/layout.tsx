@@ -8,11 +8,19 @@ import { AuthProvider } from '@/contexts/AuthContext'
 const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
+  weight: ['400', '500', '600', '700'],
 })
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ['latin'],
   variable: '--font-space-grotesk',
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
+  weight: ['400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {

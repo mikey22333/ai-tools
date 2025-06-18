@@ -1,12 +1,12 @@
 import Hero from '@/components/Hero'
+import EditorsPicks from '@/components/EditorsPicks'
 import FeaturedCategories from '@/components/FeaturedCategories'
-import TrendingTools from '@/components/TrendingTools'
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <TrendingTools />
+      <EditorsPicks />
       <FeaturedCategories />
     </>
   )

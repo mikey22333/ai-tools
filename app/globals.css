@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -84,11 +82,11 @@
       background-position: 100% 50%;
     }
   }
-  
-  /* Featured Tool Cards with Glowing Effect */
+    /* Featured Tool Cards with Glowing Effect */
   .featured-tool-card {
     position: relative;
-    overflow: hidden;
+    /* Removed overflow: hidden to allow badges to show */
+    padding: 8px; /* Add padding to accommodate badges */
   }
   
   .featured-tool-card::before {
@@ -211,12 +209,12 @@
   .featured-tool-card {
     position: relative;
     cursor: default;
+    /* Removed duplicate overflow and padding rules */
   }
-
   .featured-tool-card .featured-tool-inner {
-    background: linear-gradient(135deg, #1f2937, #111827) !important;
+    background: white !important;
     border-radius: 16px;
-    border: 1px solid #374151;
+    border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
   }
 
@@ -224,7 +222,7 @@
     border-color: #6366f1;
     transform: translateY(-2px);
     box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.25);
-  }  /* Ensure interactive elements work properly */
+  }/* Ensure interactive elements work properly */
   .featured-tool-card a,
   .featured-tool-card button {
     cursor: pointer !important;
