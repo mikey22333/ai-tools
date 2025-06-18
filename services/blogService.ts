@@ -5,6 +5,9 @@ import { unstable_cache } from 'next/cache'
 export type BlogPost = Database['public']['Tables']['posts']['Row']
 export type BlogPostInsert = Database['public']['Tables']['posts']['Insert']
 export type BlogPostUpdate = Database['public']['Tables']['posts']['Update']
+export type BlogImage = Database['public']['Tables']['blog_images']['Row']
+export type BlogImageInsert = Database['public']['Tables']['blog_images']['Insert']
+export type BlogImageUpdate = Database['public']['Tables']['blog_images']['Update']
 
 export class BlogService {  /**
    * Fetch all published blog posts, ordered by published_at descending
@@ -30,43 +33,76 @@ export class BlogService {  /**
       console.error('Failed to fetch published posts:', error)
       throw error
     }
-  }
-  /**
+  }  /**
    * Fetch a single published post by slug
    */
   static async getPublishedPostBySlug(slug: string): Promise<BlogPost | null> {
-    return unstable_cache(
-      async () => {
-        try {
-          const { data, error } = await supabase
-            .from('posts')
-            .select('*')
-            .eq('slug', slug)
-            .eq('is_published', true)
-            .single()
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('slug', slug)
+        .eq('is_published', true)
+        .single()
 
-          if (error) {
-            if (error.code === 'PGRST116') {
-              // No rows returned
-              return null
-            }
-            console.error('Error fetching post by slug:', error)
-            throw error
-          }
-
-          return data
-        } catch (error) {
-          console.error('Failed to fetch post by slug:', error)
-          throw error
+      if (error) {
+        if (error.code === 'PGRST116') {
+          // No rows returned
+          return null
         }
-      },
-      [`post-${slug}`],
-      { 
-        tags: ['blog-posts', `blog-post-${slug}`],
-        revalidate: 3600 // 1 hour
+        console.error('Error fetching post by slug:', error)
+        throw error
       }
-    )()
-  }  /**
+
+      return data
+    } catch (error) {
+      console.error('Failed to fetch post by slug:', error)
+      throw error
+    }
+  }
+
+  /**
+   * Fetch a single post by slug (including drafts) - for admin use
+   */
+  static async getPostBySlug(slug: string): Promise<BlogPost | null> {
+    try {
+      // Try admin client first, fallback to regular client if service key is invalid
+      let data, error;
+      
+      try {
+        const result = await supabaseAdmin
+          .from('posts')
+          .select('*')
+          .eq('slug', slug)
+          .single()
+        data = result.data
+        error = result.error
+      } catch (adminError) {
+        console.warn('Admin client failed, falling back to regular client:', adminError)
+        const result = await supabase
+          .from('posts')
+          .select('*')
+          .eq('slug', slug)
+          .single()
+        data = result.data
+        error = result.error
+      }
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          // No rows returned
+          return null
+        }
+        console.error('Error fetching post by slug:', error)
+        throw error
+      }
+
+      return data
+    } catch (error) {
+      console.error('Failed to fetch post by slug:', error)
+      throw error
+    }
+  }/**
    * Fetch all posts (including drafts) - for admin use
    */
   static async getAllPosts(): Promise<BlogPost[]> {
@@ -257,7 +293,6 @@ export class BlogService {  /**
       day: 'numeric'
     })
   }
-
   /**
    * Calculate reading time estimate
    */
@@ -265,5 +300,112 @@ export class BlogService {  /**
     const wordsPerMinute = 200
     const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).length
     return Math.ceil(wordCount / wordsPerMinute)
+  }
+  /**
+   * Save additional images for a blog post
+   */  static async savePostImages(slug: string, imageUrls: string[]): Promise<void> {
+    try {
+      console.log('savePostImages called with:', { slug, imageUrls, count: imageUrls.length })
+        // First, delete existing images for this post using admin client
+      console.log('Deleting existing images for slug:', slug)
+      
+      // Try admin client first, fallback to regular client if service key is invalid
+      let deleteError;
+      
+      try {
+        const result = await supabaseAdmin
+          .from('blog_images')
+          .delete()
+          .eq('post_slug', slug)
+        deleteError = result.error
+      } catch (adminError) {
+        console.warn('Admin client failed for delete, falling back to regular client:', adminError)
+        const result = await supabase
+          .from('blog_images')
+          .delete()
+          .eq('post_slug', slug)
+        deleteError = result.error
+      }
+      
+      if (deleteError) {
+        console.error('Error deleting existing images:', deleteError)
+        throw new Error(`Failed to delete existing images: ${deleteError.message}`)
+      }
+      
+      console.log('Existing images deleted successfully')
+
+      // Then insert new images
+      if (imageUrls.length > 0) {
+        const imageData: BlogImageInsert[] = imageUrls.map((url, index) => ({          post_slug: slug,
+          image_url: url,
+          display_order: index + 1
+        }))
+
+        console.log('Inserting new images:', imageData)
+        
+        // Try admin client first, fallback to regular client if service key is invalid
+        let insertError;
+        
+        try {
+          const result = await supabaseAdmin
+            .from('blog_images')
+            .insert(imageData)
+          insertError = result.error
+        } catch (adminError) {
+          console.warn('Admin client failed for insert, falling back to regular client:', adminError)
+          const result = await supabase
+            .from('blog_images')
+            .insert(imageData)
+          insertError = result.error
+        }        if (insertError) {
+          console.error('Error inserting post images:', insertError)
+          throw new Error(`Failed to insert images: ${insertError.message}`)
+        }
+        
+        console.log('New images inserted successfully')
+      } else {
+        console.log('No images to insert (imageUrls is empty)')
+      }
+    } catch (error) {
+      console.error('Failed to save post images:', error)
+      throw error
+    }
+  }
+
+  /**
+   * Get additional images for a blog post
+   */  static async getPostImages(slug: string): Promise<BlogImage[]> {
+    try {
+      // Try admin client first, fallback to regular client if service key is invalid
+      let data, error;
+      
+      try {
+        const result = await supabaseAdmin
+          .from('blog_images')
+          .select('*')
+          .eq('post_slug', slug)
+          .order('display_order', { ascending: true })
+        data = result.data
+        error = result.error
+      } catch (adminError) {
+        console.warn('Admin client failed for getPostImages, falling back to regular client:', adminError)
+        const result = await supabase
+          .from('blog_images')
+          .select('*')          .eq('post_slug', slug)
+          .order('display_order', { ascending: true })
+        data = result.data
+        error = result.error
+      }
+
+      if (error) {
+        console.error('Error fetching post images:', error)
+        throw error
+      }
+
+      return data || []
+    } catch (error) {
+      console.error('Failed to fetch post images:', error)
+      return []
+    }
   }
 }

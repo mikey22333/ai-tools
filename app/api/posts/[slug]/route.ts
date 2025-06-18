@@ -53,8 +53,7 @@ export async function GET(
 export async function PUT(
   request: NextRequest,
   { params }: RouteParams
-) {
-  try {
+) {  try {
     // In a real application, you would check authentication here
     // const session = await getServerSession(authOptions)
     // if (!session?.user) {
@@ -70,16 +69,27 @@ export async function PUT(
       )
     }
 
+    console.log('PUT request for slug:', slug)
+
     // First, find the post by slug
-    const existingPost = await BlogService.getPublishedPostBySlug(slug)
+    const existingPost = await BlogService.getPostBySlug(slug)
     if (!existingPost) {
+      console.log('Post not found for slug:', slug)
+      console.log('Available posts:')
+      try {
+        const allPosts = await BlogService.getAllPosts()
+        allPosts.forEach(p => console.log(`  - ${p.title} (${p.slug})`))
+      } catch (e) {
+        console.log('Could not fetch posts for debugging:', e)
+      }
       return NextResponse.json(
-        { error: 'Post not found' },
+        { error: `Post not found with slug: ${slug}` },
         { status: 404 }
       )
-    }
+    }    console.log('Found existing post:', existingPost.id, existingPost.title)
 
     const body = await request.json()
+    console.log('Update data:', body)
     
     // If the title changed, update the slug
     if (body.title && body.title !== existingPost.title) {
@@ -89,23 +99,64 @@ export async function PUT(
     // If changing to published, set published_at
     if (body.is_published && !existingPost.is_published) {
       body.published_at = new Date().toISOString()
-    }    const updatedPost = await BlogService.updatePost(existingPost.id, body)
+    }    // Extract additional images if provided
+    const additionalImages = body.additional_images || []
+    delete body.additional_images // Remove from body to avoid DB conflicts
 
-    // Revalidate relevant pages to show updates immediately
-    revalidatePath('/blog')
-    revalidatePath(`/blog/${existingPost.slug}`)
-    revalidatePath('/sitemap.xml')
+    console.log('Updating post with data:', body)
+    console.log('Updating post ID:', existingPost.id)
     
-    // If slug changed, revalidate the new slug path too
-    if (body.slug && body.slug !== existingPost.slug) {
-      revalidatePath(`/blog/${body.slug}`)
-    }
+    try {
+      const updatedPost = await BlogService.updatePost(existingPost.id, body)
 
-    return NextResponse.json(updatedPost)
+      console.log('Post updated successfully, result:', updatedPost)
+        // Save additional images if provided
+      if (additionalImages.length > 0) {
+        console.log('Saving additional images:', additionalImages)
+        console.log('Images to save count:', additionalImages.length)
+        console.log('Post slug for images:', updatedPost.slug)
+        
+        try {
+          await BlogService.savePostImages(updatedPost.slug, additionalImages)
+          console.log('Additional images saved successfully')
+        } catch (imageError) {
+          console.error('Error saving additional images:', imageError)
+          console.error('Image error details:', {
+            message: imageError instanceof Error ? imageError.message : 'Unknown image error',
+            stack: imageError instanceof Error ? imageError.stack : undefined,
+            additionalImages,
+            slug: updatedPost.slug
+          })
+          // Re-throw the error so the user knows something went wrong
+          throw new Error(`Failed to save images: ${imageError instanceof Error ? imageError.message : 'Unknown error'}`)
+        }
+      } else {
+        console.log('No additional images to save')
+      }
+      
+      // Revalidate relevant pages to show updates immediately
+      revalidatePath('/blog')
+      revalidatePath(`/blog/${existingPost.slug}`)
+      revalidatePath('/sitemap.xml')
+      
+      // If slug changed, revalidate the new slug path too
+      if (body.slug && body.slug !== existingPost.slug) {
+        revalidatePath(`/blog/${body.slug}`)
+      }
+
+      console.log('Post updated successfully:', updatedPost.id)
+      return NextResponse.json(updatedPost)    } catch (updateError) {
+      console.error('Error in BlogService.updatePost:', updateError)
+      console.error('Update error details:', {
+        message: updateError instanceof Error ? updateError.message : 'Unknown error',
+        stack: updateError instanceof Error ? updateError.stack : undefined
+      })
+      throw updateError
+    }
   } catch (error) {
     console.error('Error updating post:', error)
     return NextResponse.json(
-      { error: 'Failed to update post' },
+      { error: `Failed to update post: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
     )
   }
@@ -134,17 +185,8 @@ export async function DELETE(
       )
     }
 
-    console.log('DELETE request for slug:', slug)
-
-    // First, find the post by slug (including drafts for admin operations)
-    let existingPost = await BlogService.getPublishedPostBySlug(slug)
-    
-    // If not found in published posts, check all posts (for admin delete operations)
-    if (!existingPost) {
-      console.log('Post not found in published posts, checking all posts...')
-      const allPosts = await BlogService.getAllPosts()
-      existingPost = allPosts.find(post => post.slug === slug) || null
-    }
+    console.log('DELETE request for slug:', slug)    // First, find the post by slug (including drafts for admin operations)
+    let existingPost = await BlogService.getPostBySlug(slug)
     
     if (!existingPost) {
       console.log('Post not found:', slug)

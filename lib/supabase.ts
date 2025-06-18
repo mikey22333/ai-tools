@@ -129,6 +129,12 @@ export type Database = {
           published_at: string | null
           created_at: string
           updated_at: string
+          meta_title: string | null
+          meta_description: string | null
+          meta_keywords: string | null
+          author_name: string | null
+          reading_time: number | null
+          view_count: number | null
         }
         Insert: {
           id?: string
@@ -141,6 +147,12 @@ export type Database = {
           published_at?: string | null
           created_at?: string
           updated_at?: string
+          meta_title?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          author_name?: string | null
+          reading_time?: number | null
+          view_count?: number | null
         }
         Update: {
           id?: string
@@ -153,6 +165,41 @@ export type Database = {
           published_at?: string | null
           created_at?: string
           updated_at?: string
+          meta_title?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          author_name?: string | null
+          reading_time?: number | null
+          view_count?: number | null
+        }
+      }
+      blog_images: {
+        Row: {
+          id: string
+          post_slug: string
+          image_url: string
+          alt_text: string | null
+          caption: string | null
+          display_order: number | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          post_slug: string
+          image_url: string
+          alt_text?: string | null
+          caption?: string | null
+          display_order?: number | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          post_slug?: string
+          image_url?: string
+          alt_text?: string | null
+          caption?: string | null
+          display_order?: number | null
+          created_at?: string
         }
       }
     }
