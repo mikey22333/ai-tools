@@ -131,41 +131,40 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           __html: JSON.stringify(structuredData),
         }}
       />
-      
-      <article className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <article className="min-h-screen bg-gray-50">
         {/* Header */}
-        <header className="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+        <header className="bg-white border-b">
           <div className="container mx-auto px-4 py-6">
-            <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-8">
+            <nav className="flex items-center text-sm text-gray-500 mb-8">
               <Link 
                 href="/" 
-                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="hover:text-blue-600 transition-colors"
               >
                 Home
               </Link>
               <span className="mx-2">/</span>
               <Link 
                 href="/blog" 
-                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="hover:text-blue-600 transition-colors"
               >
                 Blog
               </Link>
               <span className="mx-2">/</span>
-              <span className="text-gray-900 dark:text-white">{post.title}</span>
+              <span className="text-gray-900">{post.title}</span>
             </nav>
 
             <div className="max-w-4xl mx-auto">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                 {post.title}
               </h1>
               
               {post.excerpt && (
-                <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                   {post.excerpt}
                 </p>
               )}
 
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500">
                 <div className="flex items-center">
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -204,22 +203,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             />
             <div className="absolute inset-0 bg-black/20"></div>
           </div>
-        )}
-
-        {/* Content */}
+        )}        {/* Content */}
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 md:p-12">
+            <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
               <div 
-                className="prose prose-lg dark:prose-invert max-w-none
-                           prose-headings:text-gray-900 dark:prose-headings:text-white
-                           prose-p:text-gray-700 dark:prose-p:text-gray-300
-                           prose-a:text-blue-600 dark:prose-a:text-blue-400
-                           prose-strong:text-gray-900 dark:prose-strong:text-white
-                           prose-code:text-pink-600 dark:prose-code:text-pink-400
-                           prose-pre:bg-gray-100 dark:prose-pre:bg-gray-700
-                           prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-blue-900/20
-                           prose-li:text-gray-700 dark:prose-li:text-gray-300"
+                className="prose prose-lg max-w-none
+                           prose-headings:text-gray-900
+                           prose-p:text-gray-700
+                           prose-a:text-blue-600
+                           prose-strong:text-gray-900
+                           prose-code:text-pink-600
+                           prose-pre:bg-gray-100
+                           prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50
+                           prose-li:text-gray-700"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </div>
@@ -227,7 +224,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         {/* Footer Navigation */}
-        <div className="bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+        <div className="bg-white border-t">
           <div className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto">
               <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
@@ -242,7 +239,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </Link>
                 
                 <div className="flex items-center space-x-4">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">Share this post:</span>
+                  <span className="text-sm text-gray-500">Share this post:</span>
                   <div className="flex space-x-2">
                     <a
                       href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://allaitools.com/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}`}
@@ -271,18 +268,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Related Posts Section */}
-        <div className="bg-gray-100 dark:bg-gray-900 py-12">
+        </div>        {/* Related Posts Section */}
+        <div className="bg-gray-100 py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-8">
                 More AI Tools Insights
               </h3>
               <Link
                 href="/blog"
-                className="inline-flex items-center px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg hover:shadow-lg transition-shadow border dark:border-gray-700"
+                className="inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-lg hover:shadow-lg transition-shadow border"
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />

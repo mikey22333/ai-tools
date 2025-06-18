@@ -164,13 +164,12 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
       })
     }
   }
-
   if (showForm) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="min-h-screen bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               {editingPost ? 'Edit Post' : 'Create New Post'}
             </h1>
           </div>
@@ -182,17 +181,16 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
         </div>
       </div>
     )
-  }
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+  }  return (
+    <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Notification */}
           {notification && (
             <div className={`mb-6 p-4 rounded-lg ${
               notification.type === 'success' 
-                ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200'
-                : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200'
+                ? 'bg-green-50 border border-green-200 text-green-800'
+                : 'bg-red-50 border border-red-200 text-red-800'
             }`}>
               {notification.message}
             </div>
@@ -201,10 +199,10 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-3xl font-bold text-gray-900">
                 Blog Management
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">
+              <p className="text-gray-600 mt-2">
                 Manage your blog posts and content
               </p>            </div>
             <div className="flex items-center gap-3">
@@ -227,11 +225,9 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                 Create New Post
               </button>
             </div>
-          </div>
-
-          {/* Stats Cards */}
+          </div>          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -242,10 +238,10 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                    <dt className="text-sm font-medium text-gray-500 truncate">
                       Total Posts
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900 dark:text-white">
+                    <dd className="text-lg font-medium text-gray-900">
                       {posts.length}
                     </dd>
                   </dl>
@@ -253,7 +249,7 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
@@ -264,18 +260,16 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                    <dt className="text-sm font-medium text-gray-500 truncate">
                       Published
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900 dark:text-white">
+                    <dd className="text-lg font-medium text-gray-900">
                       {posts.filter(post => post.is_published).length}
                     </dd>
                   </dl>
                 </div>
               </div>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            </div>            <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
@@ -286,10 +280,10 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                    <dt className="text-sm font-medium text-gray-500 truncate">
                       Drafts
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900 dark:text-white">
+                    <dd className="text-lg font-medium text-gray-900">
                       {posts.filter(post => !post.is_published).length}
                     </dd>
                   </dl>
@@ -297,7 +291,7 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
@@ -308,10 +302,10 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                    <dt className="text-sm font-medium text-gray-500 truncate">
                       Actions
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900 dark:text-white">
+                    <dd className="text-lg font-medium text-gray-900">
                       <button
                         onClick={refreshPosts}
                         disabled={loading}
@@ -324,12 +318,10 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Posts Table */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+          </div>          {/* Posts Table */}
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-lg font-medium text-gray-900">
                 All Posts
               </h2>
             </div>
@@ -339,10 +331,10 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                 <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
                   No posts yet
                 </h3>
-                <p className="text-gray-500 dark:text-gray-400 mb-4">
+                <p className="text-gray-500 mb-4">
                   Create your first blog post to get started.
                 </p>
                 <button
@@ -354,57 +346,56 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 dark:bg-gray-700">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Title
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Published
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Updated
                       </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                  <tbody className="bg-white divide-y divide-gray-200">
                     {posts.map((post) => (
-                      <tr key={post.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <tr key={post.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div>
-                              <div className="text-sm font-medium text-gray-900 dark:text-white">
+                              <div className="text-sm font-medium text-gray-900">
                                 {post.title}
                               </div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400">
+                              <div className="text-sm text-gray-500">
                                 /{post.slug}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <button
+                        <td className="px-6 py-4 whitespace-nowrap">                          <button
                             onClick={() => handleTogglePublish(post)}
                             className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full transition-colors ${
                               post.is_published 
-                                ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/30'
-                                : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/30'
+                                ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                                : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
                             }`}
                           >
                             {post.is_published ? 'Published' : 'Draft'}
                           </button>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {post.published_at ? BlogService.formatDate(post.published_at) : '-'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {BlogService.formatDate(post.updated_at)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -412,21 +403,20 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
                             {post.is_published && (
                               <Link
                                 href={`/blog/${post.slug}`}
-                                className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                                className="text-blue-600 hover:text-blue-900"
                                 target="_blank"
                               >
                                 View
                               </Link>
-                            )}
-                            <button
+                            )}                            <button
                               onClick={() => handleEdit(post)}
-                              className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
+                              className="text-indigo-600 hover:text-indigo-900"
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => setDeleteConfirm(post.id)}
-                              className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                              className="text-red-600 hover:text-red-900"
                             >
                               Delete
                             </button>
@@ -440,22 +430,20 @@ export default function BlogAdminClient({ initialPosts }: BlogAdminClientProps) 
             )}
           </div>
         </div>
-      </div>
-
-      {/* Delete Confirmation Modal */}
+      </div>      {/* Delete Confirmation Modal */}
       {deleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
               Delete Post
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-600 mb-6">
               Are you sure you want to delete this post? This action cannot be undone.
             </p>
             <div className="flex justify-end space-x-4">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>
