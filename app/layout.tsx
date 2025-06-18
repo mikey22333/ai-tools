@@ -56,17 +56,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {  return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <head>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>      <head>
         {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2ERGMNZR"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2ER6MGNZR"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-W2ERGMNZR');
+              gtag('config', 'G-W2ER6MGNZR');
             `,
           }}
         />
