@@ -206,19 +206,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         )}        {/* Content */}
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
-              <div 
-                className="prose prose-lg max-w-none
-                           prose-headings:text-gray-900
-                           prose-p:text-gray-700
-                           prose-a:text-blue-600
-                           prose-strong:text-gray-900
-                           prose-code:text-pink-600
-                           prose-pre:bg-gray-100
-                           prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50
-                           prose-li:text-gray-700"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+            <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">              <div className="prose prose-lg max-w-none">
+                <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
+                  {post.content}
+                </div>
+              </div>
             </div>
           </div>
         </div>

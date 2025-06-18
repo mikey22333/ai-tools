@@ -10,32 +10,26 @@ export class BlogService {  /**
    * Fetch all published blog posts, ordered by published_at descending
    */
   static async getPublishedPosts(): Promise<BlogPost[]> {
-    return unstable_cache(
-      async () => {
-        try {
-          const { data, error } = await supabase
-            .from('posts')
-            .select('*')
-            .eq('is_published', true)
-            .order('published_at', { ascending: false })
+    // Temporarily bypass cache for debugging
+    try {
+      console.log('Fetching posts from Supabase...')
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false })
 
-          if (error) {
-            console.error('Error fetching published posts:', error)
-            throw error
-          }
-
-          return data || []
-        } catch (error) {
-          console.error('Failed to fetch published posts:', error)
-          throw error
-        }
-      },
-      ['published-posts'],
-      { 
-        tags: ['blog-posts', 'blog-list'],
-        revalidate: 3600 // 1 hour
+      if (error) {
+        console.error('Supabase error:', error)
+        throw error
       }
-    )()
+
+      console.log('Raw data from Supabase:', data)
+      return data || []
+    } catch (error) {
+      console.error('Failed to fetch published posts:', error)
+      throw error
+    }
   }
   /**
    * Fetch a single published post by slug

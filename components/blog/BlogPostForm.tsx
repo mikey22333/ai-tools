@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { BlogService } from '@/services/blogService'
 import type { BlogPost } from '@/services/blogService'
-import RichTextEditor from './RichTextEditor'
 
 interface BlogPostFormProps {
   post?: BlogPost
@@ -204,28 +203,34 @@ export default function BlogPostForm({ post, onSave, onCancel }: BlogPostFormPro
             </div>
           )}
         </div>        {/* Content */}
+        <div>        {/* Content */}
         <div>
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
             Content *
           </label>
-          <RichTextEditor
+          <textarea
+            id="content"
             value={formData.content}
-            onChange={(content) => setFormData(prev => ({ ...prev, content }))}
+            onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
             placeholder="Write your post content..."
-          />
-          {errors.content && <p className="text-red-600 text-sm mt-1">{errors.content}</p>}
-        </div>
-
-        {/* Publish Status */}
+            rows={20}
+            cl        {/* Publish Status */}
         <div>
           <label className="flex items-center">
             <input
               type="checkbox"
               checked={formData.is_published}
               onChange={(e) => setFormData(prev => ({ ...prev, is_published: e.target.checked }))}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
             />
-            <span className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="ml-2 text-sm font-medium text-gray-700">
+              Publish this post
+            </span>
+            <span className="ml-1 text-xs text-gray-500">
+              (This post will be visible to the public)
+            </span>
+          </label>
+        </div>lassName="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
               Publish this post
             </span>
           </label>

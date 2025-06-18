@@ -20,15 +20,22 @@ export const metadata: Metadata = {
   }
 }
 
-// Enable ISR - revalidate every hour
-export const revalidate = 3600
+// Disable caching temporarily for debugging
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function BlogPage() {
   let posts: any[] = []
+  let error: string | null = null
+  
   try {
+    console.log('Fetching published posts...')
     posts = await BlogService.getPublishedPosts()
-  } catch (error) {
-    console.error('Error fetching blog posts:', error)
+    console.log('Found posts:', posts.length)
+    console.log('Posts data:', posts.map(p => ({ id: p.id, title: p.title, is_published: p.is_published })))
+  } catch (err) {
+    console.error('Error fetching blog posts:', err)
+    error = err instanceof Error ? err.message : 'Unknown error'
     posts = []
   }
 
@@ -67,10 +74,30 @@ export default async function BlogPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Main Content */}
+      </div>      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        {/* Debug Info */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <h3 className="font-bold text-yellow-800">Debug Info:</h3>
+            <p className="text-yellow-700">Posts found: {posts.length}</p>
+            {error && <p className="text-red-600">Error: {error}</p>}
+            {posts.length > 0 && (
+              <details className="mt-2">
+                <summary className="cursor-pointer text-yellow-800">Post details</summary>
+                <pre className="text-xs mt-2 text-yellow-700">
+                  {JSON.stringify(posts.map(p => ({ 
+                    id: p.id, 
+                    title: p.title, 
+                    is_published: p.is_published,
+                    published_at: p.published_at 
+                  })), null, 2)}
+                </pre>
+              </details>
+            )}
+          </div>
+        )}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2">
