@@ -10,7 +10,7 @@ Allow: /blog/
 Allow: /categories/
 
 # Sitemap location
-Sitemap: https://allaitools.com/sitemap.xml
+Sitemap: https://allaitools.dev/sitemap.xml
 Allow: /top-picks/
 
 # Disallow admin and API routes
