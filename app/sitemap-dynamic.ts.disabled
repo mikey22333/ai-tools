@@ -3,7 +3,8 @@ import { supabase } from '@/lib/supabase'
 import { BlogService } from '@/services/blogService'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://allaitools.dev'
+  // Use the correct production domain
+  const baseUrl = 'https://allaitools.dev'
 
   // Static pages with proper SEO priorities
   const staticPages = [
