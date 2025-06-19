@@ -8,6 +8,9 @@ Allow: /
 Allow: /tools/
 Allow: /blog/
 Allow: /categories/
+
+# Sitemap location
+Sitemap: https://allaitools.com/sitemap-for-google.xml
 Allow: /top-picks/
 
 # Disallow admin and API routes
@@ -19,8 +22,6 @@ Disallow: /*.json$
 # Disallow user-specific or temporary pages
 Disallow: /submit-tool/thank-you
 
-# Sitemap locations
-Sitemap: https://allaitools.dev/sitemap.xml
 
 # Crawl delay (optional - be respectful)
 Crawl-delay: 1
