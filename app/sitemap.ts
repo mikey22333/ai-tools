@@ -18,12 +18,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
-    },
-    {
+    },    {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
-      priority: 0.8,
+      priority: 0.9, // Increased priority for blog main page
     },
     {
       url: `${baseUrl}/categories`,
@@ -97,24 +96,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       blogPages = posts.map((post) => ({
         url: `${baseUrl}/blog/${post.slug}`,
         lastModified: new Date(post.updated_at || post.created_at),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
+        changeFrequency: 'weekly' as const,
+        priority: 0.8, // Increased priority for blog posts
       }))
+      
+      console.log(`Sitemap: Added ${blogPages.length} blog posts`)
     } catch (error) {
       console.error('Error fetching blog posts for sitemap:', error)
       blogPages = []
-    }
-
-    // Add category-specific blog pages
-    const blogCategories = ['AI Trends', 'Business', 'Ethics', 'Creative', 'Beginner']
-    const blogCategoryPages = blogCategories.map((category) => ({
-      url: `${baseUrl}/blog?category=${encodeURIComponent(category)}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-    }))
-
-    return [...staticPages, ...categoryPages, ...toolPages, ...blogPages, ...blogCategoryPages]
+    }    return [...staticPages, ...categoryPages, ...toolPages, ...blogPages]
   } catch (error) {
     console.error('Error generating sitemap:', error)
     

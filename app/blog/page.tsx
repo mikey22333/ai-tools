@@ -38,10 +38,10 @@ export default async function BlogPage() {
     error = err instanceof Error ? err.message : 'Unknown error'
     posts = []
   }
-
-  // Get featured posts (first 3 posts)
-  const featuredPosts = posts.slice(0, 3)
-  const relatedPosts = posts.slice(3, 8) // Get 5 related posts for sidebar
+  // Get latest posts (maximum 2 posts)
+  const latestPosts = posts.slice(0, 2)
+  // Get related posts (remaining posts after the latest 2, up to 10 total)
+  const relatedPosts = posts.slice(2, 12)
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -123,9 +123,8 @@ export default async function BlogPage() {
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No posts yet</h3>
                   <p className="text-gray-500">Check back soon for amazing AI tools content!</p>
                 </div>
-              ) : (
-                <div className="space-y-8">
-                  {featuredPosts.map((post, index) => (
+              ) : (                <div className="space-y-8">
+                  {latestPosts.map((post, index) => (
                     <article key={post.id} className="group">
                       <Link href={`/blog/${post.slug}`} className="block">
                         <div className="flex flex-col md:flex-row gap-6">
@@ -255,31 +254,7 @@ export default async function BlogPage() {
                       </div>
                     </div>
                   ))
-                )}
-              </div>
-            </div>
-
-            {/* Categories */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-              <div className="space-y-2">
-                <Link href="/blog?category=AI+Tools" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                  <span className="text-sm font-medium text-gray-700">AI Tools</span>
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{posts.length}</span>
-                </Link>
-                <Link href="/blog?category=Reviews" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                  <span className="text-sm font-medium text-gray-700">Reviews</span>
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{Math.floor(posts.length / 2)}</span>
-                </Link>
-                <Link href="/blog?category=Tutorials" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                  <span className="text-sm font-medium text-gray-700">Tutorials</span>
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{Math.floor(posts.length / 3)}</span>
-                </Link>
-                <Link href="/blog?category=Industry+News" className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                  <span className="text-sm font-medium text-gray-700">Industry News</span>
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{Math.floor(posts.length / 4)}</span>
-                </Link>
-              </div>
+                )}              </div>
             </div>
           </div>
         </div>
