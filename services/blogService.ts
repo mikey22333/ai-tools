@@ -11,8 +11,7 @@ export type BlogImageUpdate = Database['public']['Tables']['blog_images']['Updat
 
 export class BlogService {  /**
    * Fetch all published blog posts, ordered by published_at descending
-   */
-  static async getPublishedPosts(): Promise<BlogPost[]> {
+   */  static async getPublishedPosts(): Promise<BlogPost[]> {
     // Temporarily bypass cache for debugging
     try {
       console.log('Fetching posts from Supabase...')
@@ -20,7 +19,7 @@ export class BlogService {  /**
         .from('posts')
         .select('*')
         .eq('is_published', true)
-        .order('published_at', { ascending: false })
+        .order('created_at', { ascending: false }) // Use created_at instead of published_at
 
       if (error) {
         console.error('Supabase error:', error)
@@ -28,12 +27,25 @@ export class BlogService {  /**
       }
 
       console.log('Raw data from Supabase:', data)
+      console.log('Number of published posts found:', data?.length || 0)
+      
+      // Log each post for debugging
+      data?.forEach((post, index) => {
+        console.log(`Post ${index + 1}:`, {
+          slug: post.slug,
+          title: post.title,
+          is_published: post.is_published,
+          published_at: post.published_at,
+          created_at: post.created_at
+        })
+      })
+      
       return data || []
     } catch (error) {
       console.error('Failed to fetch published posts:', error)
       throw error
     }
-  }  /**
+  }/**
    * Fetch a single published post by slug
    */
   static async getPublishedPostBySlug(slug: string): Promise<BlogPost | null> {

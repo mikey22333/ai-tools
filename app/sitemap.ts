@@ -93,19 +93,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let blogPages: any[] = []
     
     try {
+      console.log('Sitemap: Fetching blog posts...')
       const posts = await BlogService.getPublishedPosts()
-      blogPages = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: new Date(post.updated_at || post.created_at),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8, // Increased priority for blog posts
-      }))
+      console.log('Sitemap: Found posts:', posts.length)
       
-      console.log(`Sitemap: Added ${blogPages.length} blog posts`)
+      blogPages = posts.map((post) => {
+        const sitemapEntry = {
+          url: `${baseUrl}/blog/${post.slug}`,
+          lastModified: new Date(post.updated_at || post.created_at),
+          changeFrequency: 'weekly' as const,
+          priority: 0.8, // Increased priority for blog posts
+        }
+        console.log('Sitemap: Adding blog post:', sitemapEntry.url)
+        return sitemapEntry
+      })
+      
+      console.log(`Sitemap: Successfully added ${blogPages.length} blog posts`)
     } catch (error) {
-      console.error('Error fetching blog posts for sitemap:', error)
+      console.error('Sitemap: Error fetching blog posts:', error)
       blogPages = []
-    }    return [...staticPages, ...categoryPages, ...toolPages, ...blogPages]
+    }return [...staticPages, ...categoryPages, ...toolPages, ...blogPages]
   } catch (error) {
     console.error('Error generating sitemap:', error)
     
