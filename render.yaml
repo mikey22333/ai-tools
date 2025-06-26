@@ -8,7 +8,7 @@ services:
     runtime: node
     plan: starter # Use starter plan initially, upgrade if needed
     region: oregon # Choose closest region to your users
-    buildCommand: npm ci && npm run build
+    buildCommand: npm install && npm run build
     startCommand: npm start
     healthCheckPath: /api/stats
     numInstances: 1

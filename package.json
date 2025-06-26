@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install --save-dev typescript @types/react @types/node && NODE_OPTIONS='--max-old-space-size=1024' next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=1024' next build",
     "start": "NODE_OPTIONS='--max-old-space-size=512' next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -42,10 +42,10 @@
     "sharp": "^0.34.2",
     "stripe": "^18.2.1",
     "tailwindcss": "^3.3.0",
+    "tsx": "^4.20.3",
     "typescript": "5.8.3"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^15.3.4",
-    "tsx": "^4.20.3"
+    "@next/bundle-analyzer": "^15.3.4"
   }
 }
