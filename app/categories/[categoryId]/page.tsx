@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { toolsService } from '@/services/toolsService'
 import { AITool, Category } from '@/types'
@@ -147,7 +146,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               {/* Glow Effect */}
               <div className={`absolute inset-0 w-28 h-28 rounded-3xl bg-gradient-to-br ${category.color} mx-auto blur-3xl opacity-60 -z-10 animate-pulse`}></div>
               {/* Ring Effect */}
-              <div className={`absolute inset-0 w-28 h-28 rounded-3xl border-2 border-gradient-to-r ${category.color} mx-auto opacity-30 animate-ping`}></div>
+              <div className={`absolute inset-0 w-28 h-28 rounded-3xl border-2 ${category.color} mx-auto opacity-30 animate-ping`}></div>
             </div>
               <h1 className="text-5xl sm:text-6xl font-display font-bold mb-6">
               <span className="bg-gradient-to-r from-gray-800 via-primary-600 to-primary-500 bg-clip-text text-transparent">
@@ -372,15 +371,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
         {/* Back to Categories */}
         <div className="text-center mt-12">
-          <Link
+          <a
             href="/categories"
             className="inline-flex items-center space-x-2 text-primary-400 hover:text-primary-300 font-medium transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinecap="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             <span>Back to All Categories</span>
-          </Link>
+          </a>
         </div>
         </div>
       </div>
