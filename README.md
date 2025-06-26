@@ -388,90 +388,95 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
 STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
 ```
 
-## 🚀 Deployment & Memory Optimization
+## 🚦 Getting Started (Updated 2025)
 
-### **Memory Management**
-This application is optimized for low-memory environments like Render's starter plan (512MB). We've implemented several optimizations:
-
-#### **Next.js Configuration Optimizations**
-- **Memory-limited builds**: `NODE_OPTIONS='--max-old-space-size=1024'` for build
-- **Memory-limited runtime**: `NODE_OPTIONS='--max-old-space-size=512'` for production
-- **Reduced worker threads**: `workerThreads: false` in experimental config
-- **CPU optimization**: `cpus: 1` to prevent memory spikes
-- **Image optimization**: Reduced device sizes and image formats for smaller memory footprint
-
-#### **Production Deployment Settings**
+### **Quick Start**
 ```bash
-# Build with memory limits
-npm run build  # Uses 1GB max memory
+# Clone repository
+git clone https://github.com/mikey22333/ai-tools.git
+cd ai-tools
 
-# Start with memory limits  
-npm start      # Uses 512MB max memory
+# Install dependencies (Compatible with Next.js 15.3.4)
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your Supabase and Stripe credentials
+
+# Run development server
+npm run dev
+
+# Open browser
+open http://localhost:3000
 ```
 
-#### **Render.com Optimization**
-- **Plan**: Start with `starter` plan (512MB RAM)
-- **Region**: Choose closest to your users (Oregon for US West)
-- **Build**: Uses `npm ci --only=production` for faster, smaller builds
-- **Instances**: Single instance initially to minimize memory usage
-- **Health checks**: `/api/stats` endpoint for reliability
+### **Prerequisites (2025 Requirements)**
+- **Node.js**: v18.17.0 or later (Required for Next.js 15)
+- **npm**: v8.0.0 or later
+- **Supabase Account**: For database and authentication
+- **Stripe Account**: For payment processing (optional)
 
-### **Troubleshooting Memory Issues**
+### **Key Features to Test**
+1. **Homepage**: Visit `/` to see updated hero with trending keywords
+2. **Tools Directory**: Browse 2,450+ AI tools at `/tools`
+3. **Categories**: Explore categories at `/categories`
+4. **Tool Submission**: Submit tools at `/submit-tool`
+5. **Admin Panel**: Access admin features at `/admin/login`
 
-#### **Common Memory Problems & Solutions**
-
-1. **Memory Limit Exceeded Error**
-   ```
-   Solution: Upgrade from Starter to Professional plan on Render
-   - Starter: 512MB RAM
-   - Professional: 2GB RAM
-   ```
-
-2. **Build Failures Due to Memory**
-   ```bash
-   # Increase build memory temporarily
-   NODE_OPTIONS='--max-old-space-size=2048' npm run build
-   ```
-
-3. **Runtime Memory Leaks**
-   - Check for unclosed database connections
-   - Monitor large data fetching operations
-   - Use streaming for large responses
-
-#### **Monitoring & Debugging**
+### **Development Commands**
 ```bash
-# Check memory usage locally
-node --inspect npm start
+# Development server (with hot reload)
+npm run dev
 
-# Analyze bundle size
-npm run build:analyze
+# Production build
+npm run build
+
+# Start production server
+npm start
+
+# Type checking
+npm run type-check
+
+# Linting
+npm run lint
 ```
 
-#### **Render Dashboard Environment Variables**
-Set these in your Render service dashboard:
-```env
-NODE_ENV=production
-NODE_OPTIONS=--max-old-space-size=512
-NEXT_PUBLIC_BASE_URL=https://your-domain.onrender.com
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-JWT_SECRET=your_jwt_secret
+# Set up environment variables
+cp .env.example .env.local
+
+# Run development server
+npm run dev
+
+# Access the application
+http://localhost:3000
 ```
 
-### **Performance Monitoring**
-- Monitor memory usage in Render dashboard
-- Set up alerts for memory threshold (80% of limit)
-- Use Next.js built-in analytics for performance tracking
-- Monitor Supabase connection pool usage
+### **Admin Access**
+```bash
+# Navigate to admin panel
+http://localhost:3000/admin/login
 
-### **Scaling Strategy**
-1. **Start**: Render Starter plan (512MB)
-2. **Growth**: Upgrade to Professional (2GB) when needed
-3. **Scale**: Add multiple instances for high traffic
-4. **Optimize**: Implement Redis caching for frequently accessed data
+# Login credentials
+Email: riyassajeed233@gmail.com
+Password: admin123
+```
 
-## 🔦 Future Enhancements
+## 🎯 Usage Guide
+
+### **For Users**
+1. **Browse Tools**: Visit homepage to explore AI tools
+2. **Search & Filter**: Use search and category filters
+3. **Submit Tools**: Use "Submit a Tool" button
+4. **Featured Placement**: Opt for $9.99 featured placement during submission
+
+### **For Admins**
+1. **Login**: Access admin panel with credentials
+2. **Review Submissions**: Check pending submissions
+3. **Approve/Reject**: Review and approve/reject tools
+4. **Manage Tools**: Edit existing tools and categories
+5. **Monitor Analytics**: Track platform performance
+
+## 🔮 Future Enhancements
 
 ### **Planned Features**
 - **User Accounts**: User registration and tool bookmarking
