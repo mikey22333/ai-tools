@@ -6,9 +6,9 @@ import { BlogService } from '@/services/blogService'
 import SimpleBlogContent from '@/components/blog/SimpleBlogContent'
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 // Generate static paths for all published posts
@@ -27,7 +27,8 @@ export async function generateStaticParams() {
 // Generate metadata for each post
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   try {
-    const post = await BlogService.getPublishedPostBySlug(params.slug)
+    const { slug } = await params
+    const post = await BlogService.getPublishedPostBySlug(slug)
     
     if (!post) {
       return {
@@ -100,7 +101,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   
   try {
     logMemoryUsage('Before fetching post')
-    post = await BlogService.getPublishedPostBySlug(params.slug)
+    const { slug } = await params
+    post = await BlogService.getPublishedPostBySlug(slug)
     logMemoryUsage('After fetching post')
     
     if (post) {

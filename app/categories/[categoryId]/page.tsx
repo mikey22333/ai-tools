@@ -8,9 +8,9 @@ import { AITool, Category } from '@/types'
 import ToolCard from '@/components/ToolCard'
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     categoryId: string
-  }
+  }>
 }
 
 export default function CategoryPage({ params }: CategoryPageProps) {
@@ -25,13 +25,14 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   useEffect(() => {
     async function fetchData() {
       try {
+        const { categoryId } = await params
         const [categoriesData, toolsData] = await Promise.all([
           toolsService.getCategories(),
-          toolsService.getToolsByCategory(params.categoryId)
+          toolsService.getToolsByCategory(categoryId)
         ])
         
         // Find the category
-        const foundCategory = categoriesData.find(cat => cat.id === params.categoryId)
+        const foundCategory = categoriesData.find(cat => cat.id === categoryId)
         if (!foundCategory) {
           notFound()
           return
@@ -62,7 +63,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     }
 
     fetchData()
-  }, [params.categoryId])
+  }, [params])
 
   if (loading) {
     return (

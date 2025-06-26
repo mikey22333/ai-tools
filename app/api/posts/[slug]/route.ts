@@ -4,9 +4,9 @@ import { BlogService } from '@/services/blogService'
 import { clearDeletedPostCache } from '@/lib/blog-actions'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 /**
@@ -18,7 +18,7 @@ export async function GET(
   { params }: RouteParams
 ) {
   try {
-    const { slug } = params
+    const { slug } = await params
     
     if (!slug) {
       return NextResponse.json(
@@ -60,7 +60,7 @@ export async function PUT(
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     // }
 
-    const { slug } = params
+    const { slug } = await params
     
     if (!slug) {
       return NextResponse.json(
@@ -176,7 +176,7 @@ export async function DELETE(
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     // }
 
-    const { slug } = params
+    const { slug } = await params
     
     if (!slug) {
       return NextResponse.json(
