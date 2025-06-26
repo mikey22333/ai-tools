@@ -1,4 +1,4 @@
-# Render.com deployment configuration
+# Render.com deployment configuration - Memory Optimized
 # This file can be used to configure services via Infrastructure as Code
 # https://render.com/docs/infrastructure-as-code
 
@@ -6,12 +6,17 @@ services:
   - type: web
     name: allaitools
     runtime: node
-    buildCommand: npm install && npm run build
+    plan: starter # Use starter plan initially, upgrade if needed
+    region: oregon # Choose closest region to your users
+    buildCommand: npm ci --only=production && npm run build
     startCommand: npm start
     healthCheckPath: /api/stats
+    numInstances: 1
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=512"
       - key: NEXT_PUBLIC_BASE_URL
         sync: false # Set manually in Render dashboard
       - key: NEXT_PUBLIC_SUPABASE_URL

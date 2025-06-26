@@ -1,11 +1,29 @@
-# AllAiTools - AI Tools Directory Platform
+# AllAiTools - AI Tools Directory Platform 2025
 
-A comprehensive platform for discovering, submitting, and managing AI tools across all industries. Built with Next.js, TypeScript, and Supabase.
+A comprehensive platform for discovering, submitting, and managing AI tools across all industries. Built with **Next.js 15.3.4**, TypeScript, and Supabase, featuring the latest AI tools including ChatGPT, Claude, Gemini, and AI Agents.
+
+## 🌟 Recent Updates (2025)
+
+### ✅ **Latest Improvements**
+- **Upgraded to Next.js 15.3.4** - Latest version with improved performance
+- **Font Optimization** - Switched to Inter font throughout for consistency
+- **SEO Enhancement** - Added trending keywords: ChatGPT, Claude, Gemini, AI Agents
+- **Hero Section Update** - "Best AI Tools 2025 ChatGPT & Claude" with optimized content
+- **Bug Fixes** - Resolved hydration errors, duplicate React keys, JSON syntax errors
+- **Authentication Improvements** - Enhanced error handling and retry logic
+- **Modern Git Workflow** - Using `main` branch instead of `master`
+
+### 🎯 **2025 Trending Keywords Integration**
+- **ChatGPT Alternatives** - Comprehensive list of ChatGPT competitors
+- **Claude AI** - Anthropic's advanced AI assistant tools
+- **Gemini AI** - Google's latest AI model integrations
+- **AI Agents** - Autonomous AI tools for business automation
+- **AI Tools 2025** - Latest and trending AI applications
 
 ## 🌟 Features Overview
 
 ### 🔍 **User Features**
-- **Browse AI Tools**: Discover 2,395+ AI tools across 22+ categories
+- **Browse AI Tools**: Discover **2,450+ AI tools** across 22+ categories
 - **Advanced Search**: Search by name, category, pricing, and tags
 - **Category Filtering**: Browse tools by specific categories
 - **Tool Details**: Comprehensive tool information with ratings and pricing
@@ -25,7 +43,7 @@ A comprehensive platform for discovering, submitting, and managing AI tools acro
 
 ## 🏗️ Architecture
 
-### **Frontend (Next.js 14)**
+### **Frontend (Next.js 15.3.4)**
 ```
 ├── app/                          # App Router pages
 │   ├── admin/                    # Admin panel routes
@@ -47,7 +65,25 @@ A comprehensive platform for discovering, submitting, and managing AI tools acro
 │   ├── ClientBlogPage.tsx       # Blog page component
 │   ├── ClientCategoryPage.tsx   # Category page component
 │   ├── ClientToolsDirectory.tsx # Tools directory component
-│   ├── EditorsPicks.tsx         # Featured tools section
+│   ├── EditorsPicks.tsx         # Featured tools section (Fixed hydration)
+│   ├── FeaturedCategories.tsx   # Category showcase (Fixed hydration)
+│   ├── Footer.tsx               # Site footer
+│   ├── Hero.tsx                 # Homepage hero (Updated with trending keywords)
+│   ├── Navbar.tsx               # Navigation bar
+│   ├── Newsletter.tsx           # Newsletter signup
+│   ├── RoutePrefetch.tsx        # Route prefetching
+│   ├── ToolCard.tsx             # Tool display card (Fixed duplicate keys)
+│   ├── ToolsDirectory.tsx       # Tools listing (Fixed duplicate keys)
+│   └── TrendingTools.tsx        # Trending tools section (Fixed duplicate keys)
+├── contexts/                     # React contexts
+│   └── AuthContext.tsx          # Authentication context (Enhanced error handling)
+├── lib/                         # Utilities and configurations
+│   ├── auth.ts                  # JWT authentication (Next.js 15 compatible)
+│   └── supabase.ts              # Supabase client configuration
+├── types/                       # TypeScript type definitions
+├── utils/                       # Utility functions
+└── data/                        # Static data and configurations
+```
 │   ├── FeaturedCategories.tsx   # Category showcase
 │   ├── Footer.tsx               # Site footer
 │   ├── Hero.tsx                 # Homepage hero section
@@ -171,19 +207,20 @@ User Submits Tool → Featured Placement? → Payment ($9.99) → Admin Review �
 - **Webhook Handling**: Automatic payment confirmation
 - **Payment Status Tracking**: Monitor transaction status
 
-## 🔧 Technical Stack
+## 🔧 Technical Stack (Updated 2025)
 
 ### **Frontend Technologies**
-- **Next.js 14**: React framework with App Router
+- **Next.js 15.3.4**: Latest React framework with App Router (Upgraded from 14.x)
 - **TypeScript**: Type-safe development
 - **Tailwind CSS**: Utility-first CSS framework
-- **Framer Motion**: Animation library
+- **Inter Font**: Consistent typography throughout (Removed Space Grotesk)
 - **React Hooks**: State management and side effects
+- **Enhanced Error Handling**: Improved hydration and client-side rendering
 
 ### **Backend Technologies**
-- **Next.js API Routes**: Serverless API endpoints
+- **Next.js API Routes**: Serverless API endpoints (Compatible with Next.js 15)
 - **Supabase**: PostgreSQL database and real-time features
-- **JWT**: JSON Web Tokens for authentication
+- **JWT**: JSON Web Tokens for authentication (Updated for async cookies)
 - **bcrypt**: Password hashing for security
 - **Stripe**: Payment processing integration
 
@@ -191,6 +228,28 @@ User Submits Tool → Featured Placement? → Payment ($9.99) → Admin Review �
 - **PostgreSQL**: Primary database via Supabase
 - **Supabase Storage**: File and image storage
 - **Real-time Subscriptions**: Live data updates
+
+### **SEO & Performance Optimizations**
+- **Trending Keywords**: ChatGPT, Claude, Gemini, AI Agents integration
+- **Meta Tags**: Enhanced with 2025 AI trends
+- **Performance**: Fixed hydration errors and duplicate React keys
+- **JSON-LD**: Structured data for better search engine indexing
+
+## 🐛 Bug Fixes & Improvements (2025)
+
+### **Fixed Issues**
+- ✅ **Hydration Errors**: Resolved client-server mismatch in EditorsPicks and FeaturedCategories
+- ✅ **Duplicate React Keys**: Fixed in ToolsDirectory, TrendingTools, and category pages
+- ✅ **JSON Syntax Error**: Corrected malformed JSON in schema.json
+- ✅ **Authentication Issues**: Enhanced error handling in AuthContext
+- ✅ **Next.js 15 Compatibility**: Updated verifyAdminToken to use `await cookies()`
+- ✅ **Route Conflicts**: Removed conflicting sitemap.xml directory
+
+### **Performance Enhancements**
+- ✅ **SSR Optimization**: Added skeleton loading for better user experience
+- ✅ **Error Retry Logic**: Implemented retry mechanism for API calls
+- ✅ **Deduplication Logic**: Added tool deduplication to prevent duplicates
+- ✅ **Font Loading**: Optimized font loading with Inter font family
 
 ## 🔐 Authentication & Security
 
@@ -249,10 +308,11 @@ POST /api/payment/create-session
 - **Warning**: Yellow (#f59e0b)
 - **Error**: Red (#ef4444)
 
-### **Typography**
-- **Display Font**: Space Grotesk (headings)
-- **Body Font**: Inter (body text)
+### **Typography (Updated 2025)**
+- **Display Font**: Inter (headings) - Changed from Space Grotesk for consistency
+- **Body Font**: Inter (body text) - Unified font family
 - **Font Sizes**: Responsive scale from 14px to 72px
+- **Font Loading**: Optimized with `next/font/google` and fallbacks
 
 ### **Components**
 - **Responsive Design**: Mobile-first approach
@@ -260,171 +320,158 @@ POST /api/payment/create-session
 - **Smooth Animations**: Framer Motion transitions
 - **Accessible UI**: WCAG 2.1 compliance
 
-## 🚀 Deployment & Environment
+## 🚀 Deployment & Git Workflow (2025)
 
-### **Environment Variables**
+### **Repository Information**
+- **GitHub Repository**: `https://github.com/mikey22333/ai-tools`
+- **Default Branch**: `main` (Modern Git convention)
+- **Branch Strategy**: Main branch for production-ready code
+
+### **Recent Git Updates**
+- ✅ **Switched to `main` branch** - Removed outdated `master` branch
+- ✅ **Clean commit history** - Comprehensive initial commit with all features
+- ✅ **Modern Git workflow** - Following current industry standards
+
+### **Deployment Options**
+
+#### **Vercel (Recommended)**
 ```bash
-# Database
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+# Deploy to Vercel
+npm install -g vercel
+vercel --prod
+
+# Environment variables required:
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+JWT_SECRET=your_jwt_secret_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+```
+
+#### **Netlify**
+```bash
+# Build command
+npm run build
+
+# Publish directory
+.next
+
+# Environment variables: Same as Vercel
+```
+
+#### **Render**
+```yaml
+# render.yaml configuration included
+services:
+  - type: web
+    name: allaitools
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+```
+
+### **Environment Setup**
+Create `.env.local` file:
+```env
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
 # Authentication
-JWT_SECRET=your-jwt-secret-key
+JWT_SECRET=your_super_secret_jwt_key_here
 
-# Payment
-STRIPE_SECRET_KEY=your-stripe-secret-key
-STRIPE_WEBHOOK_SECRET=your-stripe-webhook-secret
-
-# Application
-NEXT_PUBLIC_BASE_URL=https://your-domain.com
+# Stripe Configuration
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
+STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
 ```
 
-### **Production Setup**
-1. **Database Setup**: Run SQL scripts in Supabase
-2. **Environment Configuration**: Set all required environment variables
-3. **Stripe Configuration**: Set up webhook endpoints
-4. **Admin Setup**: Configure admin credentials
-5. **Domain Configuration**: Set up custom domain and SSL
+## 🚀 Deployment & Memory Optimization
 
-## 📱 Mobile Responsiveness
+### **Memory Management**
+This application is optimized for low-memory environments like Render's starter plan (512MB). We've implemented several optimizations:
 
-### **Responsive Breakpoints**
-- **Mobile**: 320px - 767px
-- **Tablet**: 768px - 1023px
-- **Desktop**: 1024px - 1439px
-- **Large Desktop**: 1440px+
+#### **Next.js Configuration Optimizations**
+- **Memory-limited builds**: `NODE_OPTIONS='--max-old-space-size=1024'` for build
+- **Memory-limited runtime**: `NODE_OPTIONS='--max-old-space-size=512'` for production
+- **Reduced worker threads**: `workerThreads: false` in experimental config
+- **CPU optimization**: `cpus: 1` to prevent memory spikes
+- **Image optimization**: Reduced device sizes and image formats for smaller memory footprint
 
-### **Mobile Features**
-- **Touch Optimized**: Large tap targets and smooth scrolling
-- **Progressive Web App**: PWA capabilities
-- **Offline Support**: Basic offline functionality
-- **Fast Loading**: Optimized images and lazy loading
-
-## 🔄 API Reference
-
-### **Public Endpoints**
-```typescript
-// Get platform statistics
-GET /api/stats
-Response: { tools: number, categories: number, users: string }
-
-// Submit new tool
-POST /api/submit-tool
-Body: { toolName, description, website, category, pricing, email, ... }
-Response: { success: boolean, submissionId?: string }
-
-// Create payment session
-POST /api/payment/create-session
-Body: { submissionId: string }
-Response: { sessionId: string, url: string }
-```
-
-### **Admin Endpoints**
-```typescript
-// Admin login
-POST /api/admin/login
-Body: { email: string, password: string }
-Response: { success: boolean, user: AdminUser }
-
-// Get submissions
-GET /api/admin/submissions?status=pending&page=1&limit=10
-Response: { submissions: Submission[], totalCount: number }
-
-// Update submission
-PUT /api/admin/submissions
-Body: { submissionId: string, status: string, notes?: string }
-Response: { success: boolean }
-```
-
-## 🧪 Current Implementation Status
-
-### **✅ Completed Features**
-- ✅ Tool discovery and browsing system
-- ✅ Category-based organization
-- ✅ Tool submission form with payment integration
-- ✅ Admin authentication and dashboard
-- ✅ Submission review and approval workflow
-- ✅ Stripe payment processing for featured placement
-- ✅ Real-time statistics display
-- ✅ Responsive design and mobile optimization
-- ✅ JWT-based admin authentication
-- ✅ Database schema and migrations
-
-### **📋 Database Status**
-- **Tools**: 2,395 tools loaded
-- **Categories**: 22 categories active
-- **Submissions**: Ready for new submissions
-- **Admin Users**: Configured with JWT authentication
-
-### **🔧 Admin Access**
-```
-URL: http://localhost:3000/admin/login
-Email: riyassajeed233@gmail.com
-Password: admin123
-```
-
-## 📈 Performance Optimization
-
-### **Frontend Optimization**
-- **Code Splitting**: Dynamic imports for route-based splitting
-- **Image Optimization**: Next.js Image component with lazy loading
-- **Prefetching**: Intelligent route prefetching
-- **Caching**: Browser caching for static assets
-- **Instant Loading**: Hero stats with fallback values
-
-### **Backend Optimization**
-- **Database Indexing**: Optimized queries with proper indexes
-- **API Caching**: Response caching for frequently accessed data
-- **Connection Pooling**: Efficient database connection management
-- **Timeout Protection**: 3-second API timeouts for better UX
-
-## 🚦 Getting Started
-
-### **Development Setup**
+#### **Production Deployment Settings**
 ```bash
-# Clone repository
-git clone https://github.com/your-username/allaitools.git
+# Build with memory limits
+npm run build  # Uses 1GB max memory
 
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env.local
-
-# Run development server
-npm run dev
-
-# Access the application
-http://localhost:3000
+# Start with memory limits  
+npm start      # Uses 512MB max memory
 ```
 
-### **Admin Access**
+#### **Render.com Optimization**
+- **Plan**: Start with `starter` plan (512MB RAM)
+- **Region**: Choose closest to your users (Oregon for US West)
+- **Build**: Uses `npm ci --only=production` for faster, smaller builds
+- **Instances**: Single instance initially to minimize memory usage
+- **Health checks**: `/api/stats` endpoint for reliability
+
+### **Troubleshooting Memory Issues**
+
+#### **Common Memory Problems & Solutions**
+
+1. **Memory Limit Exceeded Error**
+   ```
+   Solution: Upgrade from Starter to Professional plan on Render
+   - Starter: 512MB RAM
+   - Professional: 2GB RAM
+   ```
+
+2. **Build Failures Due to Memory**
+   ```bash
+   # Increase build memory temporarily
+   NODE_OPTIONS='--max-old-space-size=2048' npm run build
+   ```
+
+3. **Runtime Memory Leaks**
+   - Check for unclosed database connections
+   - Monitor large data fetching operations
+   - Use streaming for large responses
+
+#### **Monitoring & Debugging**
 ```bash
-# Navigate to admin panel
-http://localhost:3000/admin/login
+# Check memory usage locally
+node --inspect npm start
 
-# Login credentials
-Email: riyassajeed233@gmail.com
-Password: admin123
+# Analyze bundle size
+npm run build:analyze
 ```
 
-## 🎯 Usage Guide
+#### **Render Dashboard Environment Variables**
+Set these in your Render service dashboard:
+```env
+NODE_ENV=production
+NODE_OPTIONS=--max-old-space-size=512
+NEXT_PUBLIC_BASE_URL=https://your-domain.onrender.com
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+JWT_SECRET=your_jwt_secret
+```
 
-### **For Users**
-1. **Browse Tools**: Visit homepage to explore AI tools
-2. **Search & Filter**: Use search and category filters
-3. **Submit Tools**: Use "Submit a Tool" button
-4. **Featured Placement**: Opt for $9.99 featured placement during submission
+### **Performance Monitoring**
+- Monitor memory usage in Render dashboard
+- Set up alerts for memory threshold (80% of limit)
+- Use Next.js built-in analytics for performance tracking
+- Monitor Supabase connection pool usage
 
-### **For Admins**
-1. **Login**: Access admin panel with credentials
-2. **Review Submissions**: Check pending submissions
-3. **Approve/Reject**: Review and approve/reject tools
-4. **Manage Tools**: Edit existing tools and categories
-5. **Monitor Analytics**: Track platform performance
+### **Scaling Strategy**
+1. **Start**: Render Starter plan (512MB)
+2. **Growth**: Upgrade to Professional (2GB) when needed
+3. **Scale**: Add multiple instances for high traffic
+4. **Optimize**: Implement Redis caching for frequently accessed data
 
-## 🔮 Future Enhancements
+## 🔦 Future Enhancements
 
 ### **Planned Features**
 - **User Accounts**: User registration and tool bookmarking

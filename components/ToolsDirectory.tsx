@@ -12,7 +12,7 @@ export default function ToolsDirectory() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [sortBy, setSortBy] = useState<string>('rating')
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [displayLimit, setDisplayLimit] = useState<number>(100)
+  const [displayLimit, setDisplayLimit] = useState<number>(50) // Reduced from 100
   const [totalToolsCount, setTotalToolsCount] = useState<number>(0)
 
   useEffect(() => {
