@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { toolsService } from '@/services/toolsService'
 import { AITool, Category } from '@/types'
@@ -371,15 +372,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
         {/* Back to Categories */}
         <div className="text-center mt-12">
-          <a
+          <Link
             href="/categories"
             className="inline-flex items-center space-x-2 text-primary-400 hover:text-primary-300 font-medium transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path strokeLinecap="round" strokeLinecap="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             <span>Back to All Categories</span>
-          </a>
+          </Link>
         </div>
         </div>
       </div>
