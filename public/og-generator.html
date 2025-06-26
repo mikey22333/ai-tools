@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OG Image Generator</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .og-container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            box-sizing: border-box;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            margin-right: 60px;
+        }
+        .logo-circle {
+            width: 160px;
+            height: 160px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-inner {
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+        }
+        .content-section {
+            flex: 1;
+        }
+        .main-title {
+            font-size: 64px;
+            font-weight: bold;
+            color: white;
+            margin: 0 0 20px 0;
+            line-height: 1.1;
+        }
+        .subtitle {
+            font-size: 32px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            margin: 0 0 20px 0;
+        }
+        .description {
+            font-size: 24px;
+            color: rgba(255,255,255,0.8);
+            margin: 0 0 20px 0;
+        }
+        .url {
+            font-size: 20px;
+            color: rgba(255,255,255,0.7);
+            margin: 0;
+        }
+        .decorative-circles {
+            position: absolute;
+        }
+        .circle1 { top: 100px; right: 150px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .circle2 { top: 150px; right: 100px; width: 40px; height: 40px; background: rgba(255,255,255,0.15); border-radius: 50%; }
+        .circle3 { bottom: 150px; right: 80px; width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .circle4 { bottom: 100px; right: 150px; width: 70px; height: 70px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+    </style>
+</head>
+<body>
+    <div class="og-container">
+        <div class="logo-section">
+            <div class="logo-circle">
+                <div class="logo-inner">AI</div>
+            </div>
+        </div>
+        <div class="content-section">
+            <h1 class="main-title">AllAiTools</h1>
+            <p class="subtitle">AI Tools Directory 2025</p>
+            <p class="description">Discover 2450+ Top AI Tools for Every Use Case</p>
+            <p class="url">www.allaitools.dev</p>
+        </div>
+        <div class="decorative-circles">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+    </div>
+    
+    <script>
+        // This can be used to convert to canvas and save as PNG
+        function generatePNG() {
+            const container = document.querySelector('.og-container');
+            // You can use html2canvas library here to convert to PNG
+            console.log('Use html2canvas to convert this to PNG');
+        }
+    </script>
+</body>
+</html>

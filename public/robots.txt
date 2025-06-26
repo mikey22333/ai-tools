@@ -1,0 +1,55 @@
+# AllAiTools.dev - AI Tools Directory
+# Updated: June 2025
+
+# Sitemap location (placed at top for better reliability)
+Sitemap: https://www.allaitools.dev/sitemap.xml
+
+User-agent: *
+Allow: /
+
+# Allow all crawlers to access content
+Allow: /tools/
+Allow: /blog/
+Allow: /categories/
+Allow: /top-picks/
+
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /*.json$
+
+# Disallow user-specific or temporary pages
+Disallow: /submit-tool/thank-you
+
+
+# Crawl delay (optional - be respectful)
+Crawl-delay: 1
+
+# Special rules for different bots
+User-agent: Googlebot
+Allow: /api/og/
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /api/og/
+Crawl-delay: 1
+
+# Block problematic bots (optional)
+User-agent: CCBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+# Disallow internal API endpoints
+Disallow: /api/webhooks/

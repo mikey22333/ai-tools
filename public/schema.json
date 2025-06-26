@@ -1,0 +1,72 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "AllAiTools",
+  "alternateName": "All AI Tools",
+  "url": "https://www.allaitools.dev",
+  "description": "Discover 2450+ top AI tools for productivity, content creation, business automation, and more. Free AI tools directory 2025 with expert reviews and ratings.",
+  "inLanguage": "en-US",
+  "publisher": {
+    "@type": "Organization",
+    "name": "AllAiTools",
+    "url": "https://www.allaitools.dev",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.allaitools.dev/icon-512x512.svg",
+      "width": 512,
+      "height": 512
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://www.allaitools.dev/og-image.svg",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.allaitools.dev/tools?search={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "AI Tools Directory",
+    "description": "Curated collection of the best AI tools across different categories",
+    "numberOfItems": "2450+",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "AI Writing Tools",
+        "description": "AI-powered writing and content creation tools"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AI Image Generation",
+        "description": "Create stunning images with artificial intelligence"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "AI Video Tools",
+        "description": "Video creation and editing powered by AI"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "AI Business Tools",
+        "description": "Streamline business operations with AI"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "AI Coding Tools",
+        "description": "Development and programming assistance with AI"
+      }
+    ]
+  }
+}

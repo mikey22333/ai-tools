@@ -1,0 +1,20 @@
+-- Note: This file is now for reference only
+-- Admin authentication is now handled via environment variables and JWT tokens
+-- 
+-- Current admin setup:
+-- Email: admin@allaitools.com
+-- Password: admin123 (change this in production!)
+-- 
+-- To change admin credentials:
+-- 1. Run: node scripts/generate-admin-password.js
+-- 2. Update the ADMIN_CREDENTIALS in app/api/admin/login/route.ts
+-- 3. Set JWT_SECRET environment variable for production
+
+-- Previous Supabase-based admin table (no longer needed):
+-- CREATE TABLE admin_users (
+--   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--   email VARCHAR(255) UNIQUE NOT NULL,
+--   role VARCHAR(20) DEFAULT 'admin' CHECK (role IN ('admin', 'super_admin')),
+--   created_at TIMESTAMP DEFAULT NOW(),
+--   updated_at TIMESTAMP DEFAULT NOW()
+-- );

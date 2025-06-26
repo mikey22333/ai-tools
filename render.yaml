@@ -1,0 +1,33 @@
+# Render.com deployment configuration
+# This file can be used to configure services via Infrastructure as Code
+# https://render.com/docs/infrastructure-as-code
+
+services:
+  - type: web
+    name: allaitools
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/stats
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_BASE_URL
+        sync: false # Set manually in Render dashboard
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false # Set manually in Render dashboard  
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false # Set manually in Render dashboard
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # Set manually in Render dashboard
+      - key: JWT_SECRET
+        sync: false # Set manually in Render dashboard
+    domains:
+      - allaitools.com # Configure your custom domain here
+    autoDeploy: true
+    branch: main
+    rootDir: .
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+    plan: starter # Change to standard or pro for production

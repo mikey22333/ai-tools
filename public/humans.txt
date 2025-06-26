@@ -1,0 +1,49 @@
+# AllAiTools.dev - Humans.txt
+# The humans responsible for this website
+
+/* TEAM */
+  
+  Developer: AllAiTools Team
+  Contact: hello [at] allaitools.dev
+  From: Global
+
+/* THANKS */
+
+  AI Tools Community
+  Open Source Contributors
+  Early Beta Users
+  Feature Requesters
+
+/* SITE */
+
+  Last Update: 2025/06/15
+  Language: English
+  Standards: HTML5, CSS3, JavaScript ES6+, TypeScript
+  Components: Next.js, React, Tailwind CSS, Supabase
+  Software: VS Code, Git, GitHub
+  Hosting: Render
+  Domain: GoDaddy
+  
+/* FEATURES */
+
+  - 280+ AI Tools Directory
+  - Category-based Filtering
+  - Search Functionality  
+  - Blog & Articles
+  - Tool Submission System
+  - Mobile Responsive
+  - Dark Mode Support
+  - Fast Performance
+  - SEO Optimized
+
+                   .-""-.
+                  /      \
+                 |  o  o  |
+                  \  <>  /
+                   |||||
+                  _|||||_
+                 (  ___  )
+                  |||||||
+                 _|||||||_
+                (         )
+                 ~~~~~~~~~

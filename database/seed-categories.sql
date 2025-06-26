@@ -1,0 +1,23 @@
+-- Insert categories
+INSERT INTO categories (id, name, description, icon, color) VALUES
+('writing-editing', 'Writing & Editing', 'AI writing assistants and content editing tools', '✍️', 'from-indigo-500 to-purple-500'),
+('image-generation-editing', 'Image Generation & Editing', 'AI image creation and manipulation tools', '🎨', 'from-orange-500 to-red-500'),
+('image-analysis', 'Image Analysis', 'AI-powered image recognition and analysis', '🔍', 'from-blue-500 to-cyan-500'),
+('music-audio', 'Music & Audio', 'AI music generation and audio processing', '🎵', 'from-pink-500 to-purple-500'),
+('voice-generation-conversion', 'Voice Generation & Conversion', 'AI voice synthesis and conversion tools', '🎤', 'from-green-500 to-teal-500'),
+('art-creative-design', 'Art & Creative Design', 'AI tools for artistic and creative projects', '🎨', 'from-purple-500 to-pink-500'),
+('social-media', 'Social Media', 'AI tools for social media management and content', '📱', 'from-blue-500 to-indigo-500'),
+('ai-detection-anti-detection', 'AI Detection & Anti-Detection', 'Tools to detect or avoid AI-generated content', '🔎', 'from-yellow-500 to-orange-500'),
+('coding-development', 'Coding & Development', 'AI coding assistants and development tools', '💻', 'from-teal-500 to-blue-500'),
+('video-animation', 'Video & Animation', 'AI video creation and animation tools', '🎥', 'from-purple-500 to-pink-500'),
+('daily-life', 'Daily Life', 'AI tools for everyday tasks and activities', '🏠', 'from-green-500 to-emerald-500'),
+('legal-finance', 'Legal & Finance', 'AI tools for legal and financial assistance', '⚖️', 'from-gray-500 to-slate-500'),
+('business-management', 'Business Management', 'AI tools for business operations and management', '📊', 'from-blue-500 to-cyan-500'),
+('marketing-advertising', 'Marketing & Advertising', 'AI tools for marketing and advertising campaigns', '📈', 'from-red-500 to-pink-500'),
+('health-wellness', 'Health & Wellness', 'AI tools for health monitoring and wellness', '🏥', 'from-green-500 to-blue-500'),
+('business-research', 'Business Research', 'AI tools for business intelligence and research', '📋', 'from-indigo-500 to-blue-500'),
+('education-translation', 'Education & Translation', 'AI tools for learning and language translation', '🎓', 'from-yellow-500 to-orange-500'),
+('chatbots-virtual-companions', 'Chatbots & Virtual Companions', 'AI chatbots and virtual assistant companions', '🤖', 'from-purple-500 to-indigo-500'),
+('interior-architectural-design', 'Interior & Architectural Design', 'AI tools for interior and architectural design', '🏛️', 'from-brown-500 to-amber-500'),
+('office-productivity', 'Office & Productivity', 'AI tools to enhance office productivity', '⚡', 'from-green-500 to-emerald-500'),
+('research-data-analysis', 'Research & Data Analysis', 'AI tools for research and data analysis', '📊', 'from-teal-500 to-cyan-500');
