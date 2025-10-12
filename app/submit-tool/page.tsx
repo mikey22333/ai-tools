@@ -415,8 +415,8 @@ export default function SubmitToolPage() {
                         📧 Contact our team for featured placement:
                       </p>
                       <p className="text-base text-blue-600 font-semibold">
-                        <a href="mailto:admin@allaitools.dev" className="underline hover:text-blue-800">
-                          admin@allaitools.dev
+                        <a href="mailto:riyassajeed233@gmail.com" className="underline hover:text-blue-800">
+                          riyassajeed233@gmail.com
                         </a>
                       </p>
                       <p className="text-xs text-gray-500 mt-2">
