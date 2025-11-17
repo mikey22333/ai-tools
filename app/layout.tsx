@@ -86,6 +86,9 @@ export default function RootLayout({
         <link rel="icon" type="image/png" href="https://www.allaitools.dev/logo.png" />
         <link rel="apple-touch-icon" href="https://www.allaitools.dev/logo.png" />
         
+        {/* Ahrefs Analytics */}
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="sI57w1dlKYtz2PtK+N68Vw" async></script>
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
