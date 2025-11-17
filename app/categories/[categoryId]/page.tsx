@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { toolsService } from '@/services/toolsService'
@@ -14,6 +14,7 @@ interface CategoryPageProps {
 }
 
 export default function CategoryPage({ params }: CategoryPageProps) {
+  const unwrappedParams = use(params)
   const [category, setCategory] = useState<Category | null>(null)
   const [tools, setTools] = useState<AITool[]>([])
   const [loading, setLoading] = useState(true)
@@ -25,14 +26,13 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { categoryId } = await params
         const [categoriesData, toolsData] = await Promise.all([
           toolsService.getCategories(),
-          toolsService.getToolsByCategory(categoryId)
+          toolsService.getToolsByCategory(unwrappedParams.categoryId)
         ])
         
         // Find the category
-        const foundCategory = categoriesData.find(cat => cat.id === categoryId)
+        const foundCategory = categoriesData.find(cat => cat.id === unwrappedParams.categoryId)
         if (!foundCategory) {
           notFound()
           return
@@ -63,7 +63,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     }
 
     fetchData()
-  }, [params])
+  }, [unwrappedParams.categoryId])
 
   if (loading) {
     return (
@@ -312,7 +312,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         {/* Enhanced Tools Grid with Background Pattern */}
         <div className="relative">
           {/* Subtle Grid Background */}
-          <div className="absolute inset-0 bg-grid-pattern opacity-5 rounded-3xl"></div>
+          <div className="absolute inset-0 bg-grid-pattern opacity-5 rounded-3xl pointer-events-none"></div>
           
           {sortedTools.length > 0 ? (
             <div className="relative z-10">
@@ -320,7 +320,6 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 {sortedTools.map((tool, index) => (
                   <div 
                     key={`${tool.id}-${index}`}
-                    className="transform transition-all duration-300 hover:scale-105"
                     style={{ 
                       animationDelay: `${index * 50}ms`,
                       animation: 'fadeInUp 0.6s ease-out forwards'

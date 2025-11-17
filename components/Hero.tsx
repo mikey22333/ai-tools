@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 interface Stats {
   tools: number
@@ -18,6 +21,24 @@ const formatNumber = (num: number) => {
 }
 
 export default function Hero() {
+  const [stats, setStats] = useState<Stats>(staticStats)
+
+  useEffect(() => {
+    // Fetch real stats from API
+    fetch('/api/stats')
+      .then(res => res.json())
+      .then(data => {
+        setStats({
+          tools: data.tools || staticStats.tools,
+          categories: data.categories || staticStats.categories,
+          users: data.users || staticStats.users
+        })
+      })
+      .catch(err => {
+        console.error('Failed to fetch stats:', err)
+        // Keep using static stats on error
+      })
+  }, [])
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white py-24 lg:py-32">
       {/* Background Effects */}
@@ -29,14 +50,14 @@ export default function Hero() {
         <div className="space-y-8">
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold leading-tight">
-            Best{' '}
-            <span className="gradient-text">AI Tools 2025</span>{' '}
-            ChatGPT & Claude
+            Discover the{' '}
+            <span className="gradient-text">Best AI Tools</span>{' '}
+            to Transform Your Workflow
           </h1>
 
           {/* Subtext - Critical for LCP, no delays */}
           <p className="max-w-3xl mx-auto text-xl text-gray-600 leading-relaxed">
-            Explore 2,450+ cutting-edge AI tools including ChatGPT alternatives, Claude AI, Gemini, and AI agents for productivity, content creation, coding, and business automation in 2025.
+            Explore {formatNumber(stats.tools)}+ cutting-edge AI tools including ChatGPT alternatives, Claude AI, Gemini, and AI agents for productivity, content creation, coding, and business automation in 2025.
           </p>
 
           {/* CTA Buttons */}
@@ -61,18 +82,18 @@ export default function Hero() {
           <div className="pt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
             <div className="text-center">
               <div className="text-3xl font-bold gradient-text" data-stat="tools">
-                {formatNumber(staticStats.tools)}
+                {formatNumber(stats.tools)}
               </div>
               <div className="text-gray-500 text-sm mt-1">AI Tools</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold gradient-text" data-stat="categories">
-                {formatNumber(staticStats.categories)}
+                {formatNumber(stats.categories)}
               </div>
               <div className="text-gray-500 text-sm mt-1">Categories</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold gradient-text" data-stat="users">{staticStats.users}</div>
+              <div className="text-3xl font-bold gradient-text" data-stat="users">{stats.users}</div>
               <div className="text-gray-500 text-sm mt-1">Monthly Users</div>
             </div>
           </div>

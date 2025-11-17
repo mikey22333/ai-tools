@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { AITool } from '@/types'
 import { useState } from 'react'
+import ToolModal from './ToolModal'
 
 interface ToolCardProps {
   tool: AITool
@@ -13,6 +14,7 @@ interface ToolCardProps {
 export default function ToolCard({ tool, showTrendingBadge = false }: ToolCardProps) {
   const [imageSrc, setImageSrc] = useState(tool.logo || '')
   const [imageError, setImageError] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   
   // Generate fallback URLs based on the tool's URL
   const getFallbackUrls = (url: string) => {
@@ -61,7 +63,11 @@ export default function ToolCard({ tool, showTrendingBadge = false }: ToolCardPr
   }
 
   return (
-    <div className="tool-card group relative bg-white hover:bg-gray-50 transition-all duration-300 rounded-lg p-4 border border-gray-200 hover:border-primary-400/30">
+    <>
+      <div 
+        className="tool-card group relative bg-white hover:bg-gray-50 transition-all duration-300 rounded-lg p-4 border border-gray-200 hover:border-primary-400/30 cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+      >
       <div className="flex items-start space-x-3 mb-3">
         <div className="w-8 h-8 rounded-lg bg-gray-100 p-1.5 flex-shrink-0">
           {imageSrc ? (
@@ -115,6 +121,13 @@ export default function ToolCard({ tool, showTrendingBadge = false }: ToolCardPr
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+
+      <ToolModal 
+        tool={tool}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   )
 }

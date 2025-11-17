@@ -15,8 +15,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Best AI Tools 2025 | ChatGPT, Claude, Gemini & AI Agents Directory | AllAiTools',
-  description: 'Discover 2450+ best AI tools 2025 including ChatGPT alternatives, Claude AI, Gemini, AI agents for productivity, content creation, coding & business automation.',
+  title: 'Best AI Tools 2025 | Discover Top ChatGPT, Claude & AI Agents | AllAiTools',
+  description: 'Discover the best AI tools to transform your workflow. Explore thousands of cutting-edge AI tools including ChatGPT alternatives, Claude AI, Gemini, and AI agents for productivity, content creation, coding & business automation in 2025.',
   keywords: 'AI tools 2025, ChatGPT alternatives, Claude AI, Gemini AI, AI agents, best AI tools, AI productivity tools, AI content creation, AI coding tools, artificial intelligence directory',
   authors: [{ name: 'AllAiTools Team' }],
   publisher: 'AllAiTools',
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
     'google-site-verification': 'your-google-verification-code',
   },
   openGraph: {
-    title: 'AI Tools Directory 2025 | Top AI Tools for Every Use Case',
-    description: 'Discover 2450+ top AI tools for productivity, content creation, business automation, and more. Free AI tools directory with expert reviews.',
+    title: 'Best AI Tools 2025 | Discover Top ChatGPT, Claude & AI Agents',
+    description: 'Discover the best AI tools to transform your workflow. Explore cutting-edge AI tools for productivity, content creation, business automation, and more.',
     type: 'website',
     locale: 'en_US',
     url: 'https://www.allaitools.dev',
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Tools Directory 2025 | Top AI Tools for Every Use Case',
-    description: 'Discover 2450+ top AI tools for productivity, content creation, business automation, and more. Free AI tools directory with expert reviews.',
+    title: 'Best AI Tools 2025 | Discover Top ChatGPT, Claude & AI Agents',
+    description: 'Discover the best AI tools to transform your workflow. Explore cutting-edge AI tools for productivity, content creation, business automation, and more.',
     images: ['https://www.allaitools.dev/logo.png'],
     creator: '@allaitools',
     site: '@allaitools',
@@ -101,8 +101,8 @@ export default function RootLayout({
                 "width": 512,
                 "height": 512
               },
-              "description": "Discover 2450+ top AI tools for productivity, content creation, business automation, and more. Free AI tools directory 2025 with expert reviews and ratings.",
-              "slogan": "Discover AI Tools Shaping Tomorrow",
+              "description": "Discover the best AI tools to transform your workflow. Explore cutting-edge AI tools including ChatGPT alternatives, Claude AI, Gemini, and AI agents for productivity, content creation, coding, and business automation in 2025.",
+              "slogan": "Transform Your Workflow with the Best AI Tools",
               "sameAs": [
                 "https://twitter.com/allaitools",
                 "https://github.com/allaitools"

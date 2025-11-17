@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { toolsService } from '@/services/toolsService'
 import { AITool } from '@/types'
 import { formatNumberWithCommas } from '@/utils/format'
+import ToolModal from './ToolModal'
 
 // Image error handling hook
 function useImageWithFallback(initialSrc: string, toolUrl: string) {
@@ -55,9 +56,14 @@ function useImageWithFallback(initialSrc: string, toolUrl: string) {
 // Featured Tool Card Component with Image Error Handling
 function FeaturedToolCard({ tool, index }: { tool: AITool; index: number }) {
   const { imageSrc, handleImageError } = useImageWithFallback(tool.logo, tool.url)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   
   return (
-    <div className="featured-tool-card group relative p-3">
+    <>
+      <div 
+        className="featured-tool-card group relative p-3 cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+      >
       <div className="bg-white border border-gray-200 rounded-2xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 hover:border-primary-200 relative flex flex-col">
         <div className="flex items-start space-x-4 mb-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-50 to-blue-50 p-3 flex-shrink-0 border border-primary-100">
@@ -117,13 +123,21 @@ function FeaturedToolCard({ tool, index }: { tool: AITool; index: number }) {
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-primary-500 to-blue-600 text-white px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 cursor-pointer"
+              onClick={(e) => e.stopPropagation()}
             >
               Try Now
             </Link>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+
+      <ToolModal 
+        tool={tool}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   )
 }
 

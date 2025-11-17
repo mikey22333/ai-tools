@@ -96,12 +96,12 @@ function logMemoryUsage(stage: string) {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   logMemoryUsage('Page start')
   
+  const { slug } = await params
   let post
   let additionalImages: Array<{id: string, image_url: string, alt_text: string | null, caption: string | null}> = []
   
   try {
     logMemoryUsage('Before fetching post')
-    const { slug } = await params
     post = await BlogService.getPublishedPostBySlug(slug)
     logMemoryUsage('After fetching post')
     
