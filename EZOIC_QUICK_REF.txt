@@ -1,0 +1,110 @@
+┌─────────────────────────────────────────────────────────────────┐
+│                   EZOIC QUICK REFERENCE                         │
+│                      AllAiTools.dev                             │
+└─────────────────────────────────────────────────────────────────┘
+
+🎯 PLACEMENT IDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Homepage:
+  101 - Top (After Hero)
+  102 - Mid (Between Sections)
+  103 - Bottom (Before Footer)
+
+Blog Post:
+  104 - Top (After Image)
+  105 - Bottom (After Content)
+
+Blog Listing:
+  106 - Top (After Header)
+  107 - Sidebar
+
+🔗 IMPORTANT URLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Ads.txt:     https://allaitools.dev/ads.txt
+Dashboard:   https://pubdash.ezoic.com/
+Support:     https://www.ezoic.com/support/
+
+📦 FILES CHANGED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Modified:
+  • app/layout.tsx (Ezoic scripts)
+  • next.config.js (ads.txt redirect)
+  • app/page.tsx (homepage ads)
+  • app/blog/page.tsx (blog listing ads)
+  • app/blog/[slug]/page.tsx (blog post ads)
+
+Created:
+  • components/EzoicAd.tsx
+  • constants/ezoicPlacements.ts
+  • EZOIC_INTEGRATION.md
+  • EZOIC_CHECKLIST.md
+  • scripts/verify-ezoic.ps1
+
+🚀 DEPLOY COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Test locally
+npm run dev
+
+# Build
+npm run build
+
+# Deploy
+git add .
+git commit -m "Add Ezoic integration"
+git push origin main
+
+# Verify
+.\scripts\verify-ezoic.ps1
+
+✅ CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Pre-Deploy:
+  [x] Code implemented
+  [x] No errors in components
+  [x] Documentation complete
+
+Deploy:
+  [ ] npm run build
+  [ ] git push
+  [ ] Deployment successful
+
+Post-Deploy:
+  [ ] Ads.txt working
+  [ ] Scripts loading
+  [ ] Placeholders visible
+  [ ] Create placements in dashboard
+  [ ] Ads showing
+  [ ] Revenue tracking
+
+📊 SUCCESS METRICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Target EPMV:       $10-30 (varies by niche)
+Target Viewability: 60%+
+Target Page Speed:  Good Core Web Vitals
+Wait Time:         24-48 hours for initial data
+
+💡 TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Create all 7 placements in Ezoic dashboard
+• Use responsive ad sizes
+• Let Ezoic A/B test for 2-4 weeks
+• Monitor Core Web Vitals
+• Don't style placeholder divs
+• Clear cache when testing
+
+📞 SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Docs:    ./EZOIC_INTEGRATION.md
+Check:   ./EZOIC_CHECKLIST.md
+Ezoic:   support@ezoic.com
+
+Status: ✅ READY FOR DEPLOYMENT
+Date:   November 23, 2025

@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { AuthProvider } from '@/contexts/AuthContext'
+import Script from 'next/script'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -86,9 +87,6 @@ export default function RootLayout({
         <link rel="icon" type="image/png" href="https://www.allaitools.dev/logo.png" />
         <link rel="apple-touch-icon" href="https://www.allaitools.dev/logo.png" />
         
-        {/* Ahrefs Analytics */}
-        <script src="https://analytics.ahrefs.com/analytics.js" data-key="sI57w1dlKYtz2PtK+N68Vw" async></script>
-        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -115,6 +113,41 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} antialiased`}>
+        {/* Ezoic Privacy Scripts - Must load before other Ezoic scripts */}
+        <Script
+          src="https://cmp.gatekeeperconsent.com/min.js"
+          strategy="beforeInteractive"
+          data-cfasync="false"
+        />
+        <Script
+          src="https://the.gatekeeperconsent.com/cmp.min.js"
+          strategy="beforeInteractive"
+          data-cfasync="false"
+        />
+        
+        {/* Ezoic Header Script */}
+        <Script
+          src="//www.ezojs.com/ezoic/sa.min.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="ezoic-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.ezstandalone = window.ezstandalone || {};
+              ezstandalone.cmd = ezstandalone.cmd || [];
+            `
+          }}
+        />
+        
+        {/* Ahrefs Analytics */}
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="sI57w1dlKYtz2PtK+N68Vw"
+          strategy="afterInteractive"
+        />
+        
         <AuthProvider>
           <div className="min-h-screen bg-white">
             <Navbar />

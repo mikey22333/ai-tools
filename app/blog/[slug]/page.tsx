@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { BlogService } from '@/services/blogService'
 import SimpleBlogContent from '@/components/blog/SimpleBlogContent'
+import EzoicAd from '@/components/EzoicAd'
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -382,7 +383,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 />
               </div>
             </div>
-          )}          {/* Article Content */}
+          )}          {/* Top Ad - After Featured Image */}
+          <div className="mb-8">
+            <EzoicAd placementId={104} className="text-center" />
+          </div>
+
+          {/* Article Content */}
           <div className="max-w-none">
             <div className="text-lg leading-relaxed">
               {post.content && post.content.length > 30000 ? (
@@ -393,6 +399,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 formatContent(post.content)
               )}
             </div>
+          </div>
+          
+          {/* Bottom Ad - After Content */}
+          <div className="mt-8">
+            <EzoicAd placementId={105} className="text-center" />
           </div>
         </article>
 

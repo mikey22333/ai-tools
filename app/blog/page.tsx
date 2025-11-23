@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { BlogService } from '@/services/blogService'
+import EzoicAd from '@/components/EzoicAd'
 
 export const metadata: Metadata = {
   title: 'AI Tools Blog | Latest Insights, Reviews & Tutorials | AllAiTools',
@@ -77,27 +78,11 @@ export default async function BlogPage() {
       </div>      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Debug Info */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <h3 className="font-bold text-yellow-800">Debug Info:</h3>
-            <p className="text-yellow-700">Posts found: {posts.length}</p>
-            {error && <p className="text-red-600">Error: {error}</p>}
-            {posts.length > 0 && (
-              <details className="mt-2">
-                <summary className="cursor-pointer text-yellow-800">Post details</summary>
-                <pre className="text-xs mt-2 text-yellow-700">
-                  {JSON.stringify(posts.map(p => ({ 
-                    id: p.id, 
-                    title: p.title, 
-                    is_published: p.is_published,
-                    published_at: p.published_at 
-                  })), null, 2)}
-                </pre>
-              </details>
-            )}
-          </div>
-        )}
+        {/* Top Ad - After Header */}
+        <div className="mb-8">
+          <EzoicAd placementId={106} className="text-center" />
+        </div>
+        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2">
@@ -123,7 +108,8 @@ export default async function BlogPage() {
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No posts yet</h3>
                   <p className="text-gray-500">Check back soon for amazing AI tools content!</p>
                 </div>
-              ) : (                <div className="space-y-8">
+              ) : (
+                <div className="space-y-8">
                   {latestPosts.map((post, index) => (
                     <article key={post.id} className="group">
                       <Link href={`/blog/${post.slug}`} className="block">
@@ -201,6 +187,11 @@ export default async function BlogPage() {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
+            {/* Sidebar Ad */}
+            <div className="mb-6">
+              <EzoicAd placementId={107} />
+            </div>
+            
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6">Related Posts</h3>
               <div className="space-y-6">
@@ -254,7 +245,8 @@ export default async function BlogPage() {
                       </div>
                     </div>
                   ))
-                )}              </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
